@@ -143,6 +143,15 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+# Keep the minimal WSL setup script for the P0 current mirror pilot.
+!p0_current_mirror/env/
+!p0_current_mirror/env/install_min_env.sh
+# Keep the sky130 installer for the P1 current mirror pilot.
+!p1_sky130_current_mirror/env/
+!p1_sky130_current_mirror/env/install_sky130_env.sh
+
+# Local export bundles for relaying to GPT
+updates_for_gpt*.txt
 
 # Spyder project settings
 .spyderproject
