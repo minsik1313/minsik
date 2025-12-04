@@ -27,6 +27,11 @@ bash env/install_sky130_env.sh
 ```
 - 위 스크립트는 Python venv 생성 + `gdsfactory`, `sky130` 설치까지만 수행합니다.
 - volare PDK 설치, Magic 설정 등은 별도 문서를 따릅니다.
+- GitHub 원격 예시(URL만 교체하면 바로 사용 가능):
+  ```bash
+  REPO_URL="https://github.com/your-username/current-mirror.git"
+  git clone "$REPO_URL" p1_sky130_current_mirror
+  ```
 
 ## 사용법
 ```bash

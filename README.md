@@ -15,8 +15,11 @@
 ---
 
 ## 📤 GitHub로 올리고 내려받기 (요약)
-1. **원격 저장소 생성**: GitHub에서 새 repo를 만든 뒤 URL을 복사합니다. (예: `https://github.com/<username>/current-mirror.git`)
-2. **로컬을 원격에 연결**: 프로젝트 루트에서 `git remote add origin <URL>` (이미 있으면 `git remote set-url origin <URL>`)
+1. **원격 저장소 생성**: GitHub에서 새 repo를 만든 뒤 URL을 복사합니다. 바로 붙여넣을 예시:
+   ```bash
+   REPO_URL="https://github.com/your-username/current-mirror.git"  # 필요하면 username만 교체
+   ```
+2. **로컬을 원격에 연결**: 프로젝트 루트에서 `git remote add origin $REPO_URL` (이미 있으면 `git remote set-url origin $REPO_URL`)
 3. **커밋 후 푸시**:
    ```bash
    git add .

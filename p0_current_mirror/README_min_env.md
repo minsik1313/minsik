@@ -39,13 +39,14 @@ pip install gdsfactory
 
 ## 3. 이 레포 가져오기
 
+아래 REPO_URL은 복사/붙여넣기만 해도 동작하는 예시입니다. 본인 GitHub에 올렸다면 그 URL로 교체하세요.
+
 ```
 cd ~/sky130_lab/projects
-git clone <이 레포 주소> p0_current_mirror
+REPO_URL="https://github.com/your-username/current-mirror.git"
+git clone "$REPO_URL" p0_current_mirror
 cd p0_current_mirror
 ```
-
-(원격 저장소 URL을 여기 적어두면 됨.)
 
 ## 4. 제너레이터 실행해보기
 
