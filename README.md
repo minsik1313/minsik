@@ -29,6 +29,11 @@
 
 > 업데이트 번들을 텍스트로 중계할 때는 `python p0_current_mirror/export_for_gpt.py --summary "..." --output updates_for_gpt.txt` 결과를 복사해 전달하면 됩니다.
 
+### GitHub 없이 공유해야 할 때: 로컬 번들 생성
+- `./package_repo.sh`를 실행하면 현재 커밋을 포함한 tar.gz 번들(기본: `rebalance_criteria_bundle_YYYYMMDD.tar.gz`)이 생성됩니다.
+- 번들을 메신저/이메일로 전달하면 상대방은 압축을 풀고 `./run_all_gds.sh`만 실행하면 됩니다.
+- 출력 경로를 직접 지정하려면 `./package_repo.sh /tmp/my_bundle.tar.gz`처럼 실행하세요.
+
 ---
 
 ## 📑 개요
