@@ -14,6 +14,23 @@
 
 ---
 
+## 📤 GitHub로 올리고 내려받기 (요약)
+회사망에서 직접 설치·실행이 막히더라도, 로컬에서 작업한 코드를 GitHub로 올려 두면 집/비프록시 환경에서 바로 내려받아 테스트할 수 있습니다.
+
+1. **원격 저장소 생성**: GitHub에서 새 repo를 만든 뒤 URL을 복사합니다. (예: `https://github.com/<username>/current-mirror.git`)
+2. **로컬을 원격에 연결**: 프로젝트 루트에서 `git remote add origin <URL>` (이미 있으면 `git remote set-url origin <URL>`)
+3. **커밋 후 푸시**:
+   ```bash
+   git add .
+   git commit -m "Initial current-mirror scaffolding"
+   git push -u origin $(git branch --show-current)
+   ```
+4. **다른 환경에서 복제**: 집/비프록시 환경에서 `git clone <URL>`로 받아 `./run_all_gds.sh`를 실행합니다.
+
+> 업데이트 번들을 텍스트로 중계할 때는 `python p0_current_mirror/export_for_gpt.py --summary "..." --output updates_for_gpt.txt` 결과를 복사해 전달하면 됩니다.
+
+---
+
 ## 📑 개요
 **Sustainable Investment Toolkit**은 ESG·임팩트·기후 리스크 데이터를  
 *프로그래머블* 방식으로 수집·분석·시각화하여 **데이터 기반 지속가능 투자 전략**을 연구합니다.  
