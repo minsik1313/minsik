@@ -48,8 +48,8 @@ cd ~/sky130_lab/projects
 REPO_URL="https://github.com/<YOUR_GITHUB_USERNAME>/rebalance_criteria.git"
 git clone "$REPO_URL" p0_current_mirror
 
-# GitHub 없이 번들 파일만 받은 경우
-# git clone /path/to/rebalance_criteria.bundle p0_current_mirror
+# GitHub 없이 번들 파일만 받은 경우: 한 줄 복원 + main 체크아웃
+# ./restore_from_bundle.sh /path/to/rebalance_criteria.bundle p0_current_mirror main
 
 cd p0_current_mirror
 ```

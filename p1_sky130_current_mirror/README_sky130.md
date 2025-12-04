@@ -33,7 +33,7 @@ bash env/install_sky130_env.sh
   git clone https://github.com/<YOUR_GITHUB_USERNAME>/rebalance_criteria.git p1_sky130_current_mirror
 
   # GitHub 없이 번들 파일로 복원할 때
-  # git clone /path/to/rebalance_criteria.bundle p1_sky130_current_mirror
+  ./restore_from_bundle.sh /path/to/rebalance_criteria.bundle p1_sky130_current_mirror main
   ```
 
 ## 사용법

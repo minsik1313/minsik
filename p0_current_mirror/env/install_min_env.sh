@@ -34,7 +34,7 @@ echo "1) 레포 클론:"
 echo "   cd ${LAB_ROOT}/projects"
 echo "   # GitHub 예시 (사용자명만 교체)"
 echo "   git clone https://github.com/<YOUR_GITHUB_USERNAME>/rebalance_criteria.git p0_current_mirror"
-echo "   # GitHub를 안 쓸 때: git clone /path/to/rebalance_criteria.bundle p0_current_mirror"
+echo "   # GitHub를 안 쓸 때: ./restore_from_bundle.sh /path/to/rebalance_criteria.bundle p0_current_mirror main"
 echo
 echo "2) 제너레이터 실행:"
 echo "   source ${VENV_PATH}/bin/activate"

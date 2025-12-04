@@ -15,4 +15,4 @@ fi
 git bundle create "$OUT" --all
 
 echo "[DONE] $OUT 생성 완료"
-echo "[CLONE] 로컬/다른 PC에서: git clone $OUT rebalance_criteria"
+echo "[CLONE] 로컬/다른 PC에서: ./restore_from_bundle.sh $OUT rebalance_criteria main"

@@ -22,7 +22,7 @@
    # SSH 예시
    # REPO_URL="git@github.com:<YOUR_GITHUB_USERNAME>/rebalance_criteria.git"
    ```
-   > 정말 GitHub를 쓰지 않겠다면, 아래 **git 번들** 방법을 쓰세요. (원격 없이 `git clone rebalance_criteria.bundle rebalance_criteria` 가능)
+   > 정말 GitHub를 쓰지 않겠다면, 아래 **git 번들** 방법을 쓰세요. (원격 없이도 `./restore_from_bundle.sh rebalance_criteria.bundle rebalance_criteria main` 한 줄로 복원 가능)
 2. **로컬을 원격에 연결**: 프로젝트 루트에서 `git remote add origin "$REPO_URL"` (이미 있으면 `git remote set-url origin "$REPO_URL"`)
 3. **커밋 후 푸시**:
    ```bash
@@ -41,8 +41,10 @@
   # (원본 PC) 번들 생성
   ./make_git_bundle.sh    # 결과: rebalance_criteria.bundle
 
-  # (다른 PC) 번들을 받아둔 후
-  git clone rebalance_criteria.bundle rebalance_criteria
+  # (다른 PC) 번들을 받아둔 후: 한 줄 복원 + main 체크아웃
+  ./restore_from_bundle.sh rebalance_criteria.bundle rebalance_criteria main
+
+  # 확인 후 실행
   cd rebalance_criteria
   ./run_all_gds.sh
   ```
