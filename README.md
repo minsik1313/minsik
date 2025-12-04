@@ -15,10 +15,14 @@
 ---
 
 ## 📤 GitHub로 올리고 내려받기 (요약)
-1. **원격 저장소 생성**: 이 레포는 기본 원격이 없습니다. GitHub에서 새 repo를 만든 뒤 **본인 계정**으로 URL을 설정하세요. 붙여넣기 예시:
+1. **원격 저장소 생성(꼭 사용자명을 바꿔야 함)**: 이 레포는 기본 원격이 없습니다. GitHub에서 새 repo를 만들고 **본인 사용자명·레포 이름**으로 URL을 채워 넣어야 합니다. 예시:
    ```bash
-   REPO_URL="https://github.com/<YOUR_GITHUB_USERNAME>/current-mirror.git"  # <> 안을 본인 아이디로 교체
+   # 아래 예시는 복붙용 템플릿입니다. <YOUR_GITHUB_USERNAME>을 실제 GitHub 아이디로, <REPO_NAME>을 만든 레포 이름으로 바꾸세요.
+   REPO_URL="https://github.com/<YOUR_GITHUB_USERNAME>/<REPO_NAME>.git"
+   # SSH 선호 시
+   # REPO_URL="git@github.com:<YOUR_GITHUB_USERNAME>/<REPO_NAME>.git"
    ```
+   > `<YOUR_GITHUB_USERNAME>`를 그대로 두면 clone이 실패합니다. 반드시 본인 아이디로 치환하거나, GitHub를 쓰지 않을 경우 `./package_repo.sh`로 번들을 만들어 전달하세요.
 2. **로컬을 원격에 연결**: 프로젝트 루트에서 `git remote add origin "$REPO_URL"` (이미 있으면 `git remote set-url origin "$REPO_URL"`)
 3. **커밋 후 푸시**:
    ```bash
