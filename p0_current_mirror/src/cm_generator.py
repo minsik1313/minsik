@@ -13,7 +13,7 @@ LAYER_LABEL = (10, 0)  # label 레이어 자리만 마련 (현재 미사용)
 
 
 def make_current_mirror(
-    cell_name: str = "cm_v01",
+    cell_name: str = "cm_generic",
     nf_per_leg: int = 2,
     with_dummy: bool = True,
     pitch: float = 2.0,
@@ -70,5 +70,5 @@ def make_current_mirror(
 
 if __name__ == "__main__":
     component = make_current_mirror()
-    component.write_gds("cm_v01.gds")
-    print("Wrote cm_v01.gds")
+    component.write_gds("cm_generic.gds")
+    print("Wrote cm_generic.gds")
