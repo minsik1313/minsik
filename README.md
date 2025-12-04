@@ -15,18 +15,18 @@
 ---
 
 ## 📤 GitHub로 올리고 내려받기 (요약)
-1. **원격 저장소 생성**: GitHub에서 새 repo를 만든 뒤 URL을 복사합니다. 바로 붙여넣을 예시:
+1. **원격 저장소 생성**: 이 레포는 기본 원격이 없습니다. GitHub에서 새 repo를 만든 뒤 **본인 계정**으로 URL을 설정하세요. 붙여넣기 예시:
    ```bash
-   REPO_URL="https://github.com/your-username/current-mirror.git"  # 필요하면 username만 교체
+   REPO_URL="https://github.com/<YOUR_GITHUB_USERNAME>/current-mirror.git"  # <> 안을 본인 아이디로 교체
    ```
-2. **로컬을 원격에 연결**: 프로젝트 루트에서 `git remote add origin $REPO_URL` (이미 있으면 `git remote set-url origin $REPO_URL`)
+2. **로컬을 원격에 연결**: 프로젝트 루트에서 `git remote add origin "$REPO_URL"` (이미 있으면 `git remote set-url origin "$REPO_URL"`)
 3. **커밋 후 푸시**:
    ```bash
    git add .
    git commit -m "Initial current-mirror scaffolding"
    git push -u origin $(git branch --show-current)
    ```
-4. **다른 환경에서 복제**: 집/비프록시 환경에서 `git clone <URL>`로 받아 `./run_all_gds.sh`를 실행합니다.
+4. **다른 환경에서 복제**: 집/비프록시 환경에서 `git clone "$REPO_URL"`로 받아 `./run_all_gds.sh`를 실행합니다.
 
 > 업데이트 번들을 텍스트로 중계할 때는 `python p0_current_mirror/export_for_gpt.py --summary "..." --output updates_for_gpt.txt` 결과를 복사해 전달하면 됩니다.
 

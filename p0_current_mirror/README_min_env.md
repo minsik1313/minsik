@@ -39,11 +39,11 @@ pip install gdsfactory
 
 ## 3. 이 레포 가져오기
 
-아래 REPO_URL은 복사/붙여넣기만 해도 동작하는 예시입니다. 본인 GitHub에 올렸다면 그 URL로 교체하세요.
+이 레포는 기본 원격이 없습니다. GitHub에 새 repo를 만든 뒤 **본인 계정** URL로 교체해 사용하세요.
 
 ```
 cd ~/sky130_lab/projects
-REPO_URL="https://github.com/your-username/current-mirror.git"
+REPO_URL="https://github.com/<YOUR_GITHUB_USERNAME>/current-mirror.git"  # <> 안을 본인 아이디로 교체
 git clone "$REPO_URL" p0_current_mirror
 cd p0_current_mirror
 ```

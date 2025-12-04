@@ -29,7 +29,7 @@ bash env/install_sky130_env.sh
 - volare PDK 설치, Magic 설정 등은 별도 문서를 따릅니다.
 - GitHub 원격 예시(URL만 교체하면 바로 사용 가능):
   ```bash
-  REPO_URL="https://github.com/your-username/current-mirror.git"
+  REPO_URL="https://github.com/<YOUR_GITHUB_USERNAME>/current-mirror.git"  # <> 안을 본인 아이디로 교체
   git clone "$REPO_URL" p1_sky130_current_mirror
   ```
 

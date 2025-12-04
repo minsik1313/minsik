@@ -33,7 +33,7 @@ pip install gdsfactory sky130
 echo "[3/3] 설치 완료. 다음을 수행하세요:"
 echo "1) 레포 클론:"
 echo "   cd ${LAB_ROOT}/projects"
-echo "   REPO_URL=\"https://github.com/your-username/current-mirror.git\""
+echo "   REPO_URL=\"https://github.com/<YOUR_GITHUB_USERNAME>/current-mirror.git\"  # <> 안을 본인 아이디로 교체"
 echo "   git clone \"${REPO_URL}\" p1_sky130_current_mirror"
 echo "   cd p1_sky130_current_mirror/src"
 echo "2) 제너레이터 실행:"

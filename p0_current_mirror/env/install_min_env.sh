@@ -32,7 +32,7 @@ echo "이제 아래 순서로 진행하세요:"
 echo
 echo "1) 레포 클론:"
 echo "   cd ${LAB_ROOT}/projects"
-echo "   REPO_URL=\"https://github.com/your-username/current-mirror.git\""
+echo "   REPO_URL=\"https://github.com/<YOUR_GITHUB_USERNAME>/current-mirror.git\"  # <> 안을 본인 아이디로 교체"
 echo "   git clone \"${REPO_URL}\" p0_current_mirror"
 echo
 echo "2) 제너레이터 실행:"
