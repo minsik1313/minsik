@@ -15,14 +15,14 @@
 ---
 
 ## 📤 GitHub로 올리고 내려받기 (요약)
-1. **원격 저장소 생성(꼭 사용자명을 바꿔야 함)**: 이 레포는 기본 원격이 없습니다. GitHub에서 새 repo를 만들고 **본인 사용자명·레포 이름**으로 URL을 채워 넣어야 합니다. 예시:
+1. **원격 저장소 생성(필수)**: 기본 원격이 없습니다. **당신 GitHub 계정으로 새 repo를 만든 뒤** 아래 명령을 그대로 복사해 사용자명/레포명을 바꿔 주세요.
    ```bash
-   # 아래 예시는 복붙용 템플릿입니다. <YOUR_GITHUB_USERNAME>을 실제 GitHub 아이디로, <REPO_NAME>을 만든 레포 이름으로 바꾸세요.
-   REPO_URL="https://github.com/<YOUR_GITHUB_USERNAME>/<REPO_NAME>.git"
-   # SSH 선호 시
-   # REPO_URL="git@github.com:<YOUR_GITHUB_USERNAME>/<REPO_NAME>.git"
+   # HTTPS 예시 (붙여넣고 <> 부분만 바꾸면 됨)
+   REPO_URL="https://github.com/<YOUR_GITHUB_USERNAME>/rebalance_criteria.git"
+   # SSH 예시
+   # REPO_URL="git@github.com:<YOUR_GITHUB_USERNAME>/rebalance_criteria.git"
    ```
-   > `<YOUR_GITHUB_USERNAME>`를 그대로 두면 clone이 실패합니다. 반드시 본인 아이디로 치환하거나, GitHub를 쓰지 않을 경우 `./package_repo.sh`로 번들을 만들어 전달하세요.
+   > 정말 GitHub를 쓰지 않겠다면, 아래 **git 번들** 방법을 쓰세요. (원격 없이 `git clone rebalance_criteria.bundle rebalance_criteria` 가능)
 2. **로컬을 원격에 연결**: 프로젝트 루트에서 `git remote add origin "$REPO_URL"` (이미 있으면 `git remote set-url origin "$REPO_URL"`)
 3. **커밋 후 푸시**:
    ```bash
@@ -36,7 +36,17 @@
 
 ### GitHub 없이 공유해야 할 때: 로컬 번들 생성
 - `./package_repo.sh`를 실행하면 현재 커밋을 포함한 tar.gz 번들(기본: `rebalance_criteria_bundle_YYYYMMDD.tar.gz`)이 생성됩니다.
-- 번들을 메신저/이메일로 전달하면 상대방은 압축을 풀고 `./run_all_gds.sh`만 실행하면 됩니다.
+- **git clone이 꼭 필요하면** `./make_git_bundle.sh`로 `rebalance_criteria.bundle`을 만든 뒤, 다른 PC에서 아래처럼 복원하면 됩니다:
+  ```bash
+  # (원본 PC) 번들 생성
+  ./make_git_bundle.sh    # 결과: rebalance_criteria.bundle
+
+  # (다른 PC) 번들을 받아둔 후
+  git clone rebalance_criteria.bundle rebalance_criteria
+  cd rebalance_criteria
+  ./run_all_gds.sh
+  ```
+- tar 번들을 메신저/이메일로 전달하면 상대방은 압축을 풀고 `./run_all_gds.sh`만 실행하면 됩니다.
 - 출력 경로를 직접 지정하려면 `./package_repo.sh /tmp/my_bundle.tar.gz`처럼 실행하세요.
 
 ---

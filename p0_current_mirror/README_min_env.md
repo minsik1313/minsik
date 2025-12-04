@@ -43,12 +43,18 @@ pip install gdsfactory
 
 ```
 cd ~/sky130_lab/projects
-REPO_URL="https://github.com/<YOUR_GITHUB_USERNAME>/<REPO_NAME>.git"  # <> 안을 본인 정보로 교체
+
+# GitHub에 올려둔 경우(사용자명만 교체)
+REPO_URL="https://github.com/<YOUR_GITHUB_USERNAME>/rebalance_criteria.git"
 git clone "$REPO_URL" p0_current_mirror
+
+# GitHub 없이 번들 파일만 받은 경우
+# git clone /path/to/rebalance_criteria.bundle p0_current_mirror
+
 cd p0_current_mirror
 ```
 
-> GitHub를 쓰지 않을 경우 `package_repo.sh`로 tar.gz 번들을 만들어 전달하거나, `export_for_gpt.py` 출력으로 복원할 수 있습니다. `<YOUR_GITHUB_USERNAME>`를 그대로 두면 clone이 실패합니다.
+> GitHub를 쓰지 않을 경우 `package_repo.sh`나 `make_git_bundle.sh`로 만든 번들을 받아 `git clone rebalance_criteria.bundle p0_current_mirror`처럼 복원하세요. `<YOUR_GITHUB_USERNAME>`를 그대로 두면 clone이 실패합니다.
 
 ## 4. 제너레이터 실행해보기
 

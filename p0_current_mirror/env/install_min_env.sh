@@ -32,9 +32,9 @@ echo "이제 아래 순서로 진행하세요:"
 echo
 echo "1) 레포 클론:"
 echo "   cd ${LAB_ROOT}/projects"
-echo "   REPO_URL=\"https://github.com/<YOUR_GITHUB_USERNAME>/<REPO_NAME>.git\"  # <> 안을 본인 정보로 교체"
-echo "   git clone \"${REPO_URL}\" p0_current_mirror"
-echo "   # GitHub를 쓰지 않으면 package_repo.sh 번들을 사용하거나 export_for_gpt.py 출력으로 복원하세요."
+echo "   # GitHub 예시 (사용자명만 교체)"
+echo "   git clone https://github.com/<YOUR_GITHUB_USERNAME>/rebalance_criteria.git p0_current_mirror"
+echo "   # GitHub를 안 쓸 때: git clone /path/to/rebalance_criteria.bundle p0_current_mirror"
 echo
 echo "2) 제너레이터 실행:"
 echo "   source ${VENV_PATH}/bin/activate"

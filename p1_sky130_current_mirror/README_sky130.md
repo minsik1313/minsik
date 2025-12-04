@@ -27,11 +27,13 @@ bash env/install_sky130_env.sh
 ```
 - 위 스크립트는 Python venv 생성 + `gdsfactory`, `sky130` 설치까지만 수행합니다.
 - volare PDK 설치, Magic 설정 등은 별도 문서를 따릅니다.
-- GitHub 원격 템플릿(반드시 사용자명·레포명을 바꿔야 함):
+- GitHub/번들 복원 예시(복붙 후 <>만 바꾸면 됨):
   ```bash
-  REPO_URL="https://github.com/<YOUR_GITHUB_USERNAME>/<REPO_NAME>.git"  # <> 안을 본인 정보로 교체
-  git clone "$REPO_URL" p1_sky130_current_mirror
-  # GitHub를 쓰지 않으면 package_repo.sh 번들이나 export_for_gpt.py 출력으로 복원하세요.
+  # GitHub에 올렸다면 (사용자명만 교체)
+  git clone https://github.com/<YOUR_GITHUB_USERNAME>/rebalance_criteria.git p1_sky130_current_mirror
+
+  # GitHub 없이 번들 파일로 복원할 때
+  # git clone /path/to/rebalance_criteria.bundle p1_sky130_current_mirror
   ```
 
 ## 사용법
