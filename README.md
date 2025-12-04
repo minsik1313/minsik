@@ -10,13 +10,11 @@
 
 > *“Balance profit **and** purpose—one pull request at a time.”*
 
-> **Current-mirror mini mission:** P0(제너릭)·P1(sky130) 코드 제너레이터를 집/비프록시 환경에서 GDS → DRC까지 흘려보내는 흐름을 검증합니다. (인프라 v1.0 동결 — 더 세팅하지 말고 “집=실행, 회사=코드 폴리싱” 원칙으로 첫 실행을 우선합니다.)
+> **Current-mirror mini mission:** P0(제너릭)·P1(sky130) 코드 제너레이터를 로컬에서 GDS → DRC까지 흘려보내는 흐름을 검증합니다.
 
 ---
 
 ## 📤 GitHub로 올리고 내려받기 (요약)
-회사망에서 직접 설치·실행이 막히더라도, 로컬에서 작업한 코드를 GitHub로 올려 두면 집/비프록시 환경에서 바로 내려받아 테스트할 수 있습니다.
-
 1. **원격 저장소 생성**: GitHub에서 새 repo를 만든 뒤 URL을 복사합니다. (예: `https://github.com/<username>/current-mirror.git`)
 2. **로컬을 원격에 연결**: 프로젝트 루트에서 `git remote add origin <URL>` (이미 있으면 `git remote set-url origin <URL>`)
 3. **커밋 후 푸시**:
@@ -351,42 +349,7 @@ python p0_current_mirror/export_for_gpt.py \
   ```
 - 모듈이 없으면 친절한 오류와 함께 종료하므로, 메시지에 따라 `env/install_min_env.sh` 또는 `env/install_sky130_env.sh`를 먼저 돌린 뒤 재시도하면 된다.
 
-#### ✅ 실행 루틴(집/프록시 없는 환경 기준)
-1. WSL/Ubuntu + 가상환경을 준비한다(각 README의 install 스크립트 참고).
-2. 저장소 루트로 이동한다: `cd <repo-root>`
-3. 필요 시 모듈을 확인한다: `python -c "import gdsfactory" || pip install gdsfactory`
-4. 원샷 실행: `./run_all_gds.sh` (필요하면 `--p0-only`, `--p1-only`)
-
-#### 🚧 회사/프록시 403 환경
-- **회사 보안 정책을 우회하려는 시도는 하지 않는다.** IT가 허용한 옵션(사내 미러·공식 프록시·trusted-host)만 사용하고, 그래도 403이면 실행을 포기한 뒤 집/개인 환경에서 돌린다.
-- 프록시로 `pip install gdsfactory`가 막히면 **코드·문서 작업만** 진행하고 실행은 건너뛴다.
-- 집/프록시 없는 환경에서는 가장 간단히 `pip install --upgrade pip && pip install gdsfactory` 후 `./run_all_gds.sh`를 돌리면 된다.
-- 당장 설치가 필요하다면 아래 우회 순서대로 시도한다(회사 보안 정책에 맞춰 사용).
-  1. **Trusted host 우회** (SSL 검증만 우회):
-     ```bash
-     pip install gdsfactory --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
-     ```
-  2. **사내 프록시 명시** (Option 1 실패 시):
-     ```bash
-     pip install gdsfactory --proxy http://user:password@proxy.company.com:8080
-     ```
-  3. **국내 미러 사용** (속도 개선/차선책):
-     ```bash
-     pip install gdsfactory -i http://mirror.kakao.com/pypi/simple --trusted-host mirror.kakao.com
-     ```
-
-### 🧭 “회사=코드, 집=실행” 운영 플랜
-- **회사(프록시/제한 환경)**: 코드·주석·README 정리 위주로 작업하고, 설치·실행은 시도하지 않습니다.
-  - 새 변경점이 생기면 `python p0_current_mirror/export_for_gpt.py --show-defaults`로 대상 파일을 확인한 뒤 요약만 공유합니다.
-- **집·개인(비프록시) 환경**: 설치·실행·DRC를 모두 담당합니다.
-  1. `cd <repo-root>` → `python -c "import gdsfactory" || pip install gdsfactory` (필요 시 sky130도 설치)
-  2. `./run_all_gds.sh`로 P0/P1 GDS를 한 번에 생성
-  3. KLayout에서 D–A–B–A–B–D 패턴, `sd_pitch_pair` 변화가 잘 반영됐는지 눈으로 확인
-  4. (옵션) Magic에서 `drc check` → 대표 에러 메시지 3~5개를 메모
-  5. 리뷰 요청 시 루트에서:
-     ```bash
-     python p0_current_mirror/export_for_gpt.py \
-       --summary "run_all_gds.sh 기반 P0/P1 실행·GDS 생성 결과" \
-       --output updates_for_gpt.txt
-     ```
-     생성된 `updates_for_gpt.txt`(가능하면 Magic DRC 로그 포함)를 그대로 붙여서 공유하면 됩니다.
+### 🧭 실행 팁
+- 가상환경을 활성화한 뒤 `./run_all_gds.sh`를 실행하면 P0/P1 GDS를 한 번에 생성할 수 있습니다.
+- 필요한 모듈이 없다면 `env/install_min_env.sh` 또는 `env/install_sky130_env.sh`를 먼저 실행한 뒤 다시 시도하세요.
+- KLayout이나 Magic으로 결과 GDS를 열어 D–A–B–A–B–D 패턴과 파라미터 변화가 잘 반영됐는지 확인하면 됩니다.

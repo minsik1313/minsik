@@ -45,7 +45,7 @@ git clone <이 레포 주소> p0_current_mirror
 cd p0_current_mirror
 ```
 
-(회사에서 미리 만들어 둔 레포 URL을 여기 적어두면 됨.)
+(원격 저장소 URL을 여기 적어두면 됨.)
 
 ## 4. 제너레이터 실행해보기
 

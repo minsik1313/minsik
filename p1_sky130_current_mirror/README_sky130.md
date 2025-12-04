@@ -3,7 +3,7 @@
 ## 목표
 - P0-민무장에서 만든 **D–A–B–A–B–D** 인터디직 패턴을 그대로 유지하되, sky130 PCell을 사용해 **실제 NMOS Current Mirror**처럼 보이는 GDS를 생성합니다.
 - 완벽한 DRC/타이밍까지는 목표가 아니며, **PCell 호출·배치·라벨링 체력** 확보가 목적입니다.
-- 현재 인프라 v1.0은 동결 상태입니다. 회사에서는 코드/주석만 다듬고, **집·비프록시 환경에서 실행·DRC를 진행**한다는 원칙을 유지합니다.
+- 현재 인프라 v1.0은 동결 상태입니다. 가상환경을 준비한 뒤 로컬에서 실행·DRC를 진행하는 흐름을 기준으로 합니다.
 
 ## 디렉터리 구조
 ```
@@ -41,25 +41,11 @@ python run_cm_sky130.py
   ./run_all_gds.sh --p1-only   # sky130만 실행
   ```
   모듈(gdsfactory/sky130)이 없으면 오류 메시지와 함께 중단되므로, `env/install_sky130_env.sh`를 먼저 실행 후 재시도하세요.
-- **회사 보안 정책을 우회하지 않는다.** IT가 허용한 방식(사내 미러·공식 프록시·trusted-host)만 쓰고, 그래도 403이면 실행은 건너뛴 채 코드/리팩토링 위주로 진행한다.
-- 집/프록시 없는 환경에서는 가장 단순하게 `pip install --upgrade pip && pip install gdsfactory sky130` 후 `./run_all_gds.sh --p1-only`를 돌리면 된다.
-- 회사 프록시로 pip 설치가 막히면 아래 우회 순서대로 시도하거나, 실행은 집/프록시 없는 환경에서 진행하세요.
-  1. **Trusted host 우회**:
-     ```bash
-     pip install gdsfactory --trusted-host pypi.org --trusted-host pypi.pythonhosted.org --trusted-host files.pythonhosted.org
-     ```
-  2. **사내 프록시 명시**:
-     ```bash
-     pip install gdsfactory --proxy http://user:password@proxy.company.com:8080
-     ```
-  3. **국내 미러 사용**:
-     ```bash
-     pip install gdsfactory -i http://mirror.kakao.com/pypi/simple --trusted-host mirror.kakao.com
-     ```
+- 필요 시 `pip install --upgrade pip && pip install gdsfactory sky130`로 패키지를 설치한 뒤 실행하세요. 네트워크 제약이 있으면 trusted-host나 미러 옵션을 활용할 수 있습니다.
 
-#### 🧭 “회사=코드, 집=실행” 적용
-- **회사/프록시 환경**: 설치·실행은 생략하고, 코드/주석/문서 정리만 진행합니다.
-- **집/비프록시 환경**: `python -c "import gdsfactory" || pip install gdsfactory sky130` 후 `./run_all_gds.sh --p1-only`로 GDS를 찍고, KLayout/Magic으로 패턴·`sd_pitch_pair` 변화·에러 메시지를 확인합니다.
+#### 🧭 실행 확인
+- `python -c "import gdsfactory" || pip install gdsfactory sky130`로 의존성을 맞춘 뒤 `./run_all_gds.sh --p1-only`로 GDS를 생성합니다.
+- KLayout/Magic으로 ABAB 패턴과 `sd_pitch_pair` 변화가 잘 반영됐는지 확인하세요.
 
 ### 배치 스타일
 - OpenFASoC/Glayout 계열에서 쓰는 **계층 + 상대좌표** 패턴을 적용했습니다.

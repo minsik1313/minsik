@@ -48,20 +48,11 @@ require_module() {
   if ! check_module "$module"; then
     echo "[error] Python 모듈 '${module}'을(를) 찾을 수 없습니다." >&2
     echo "        ${hint}" >&2
-    echo "        (회사 프록시로 설치가 막히면 코드만 수정하고 집/프록시 없는 환경에서 ./run_all_gds.sh를 실행하세요.)" >&2
-    echo "        (회사 정책 허용 범위에서만 trusted-host/프록시/미러 옵션을 사용하고, 그래도 403이면 실행은 집에서 진행하세요.)" >&2
-    echo "        (급하게 우회하려면: pip install ${module} --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org)" >&2
     exit 1
   fi
 }
 
 echo "[info] P0/P1 GDS 스모크 테스트를 시작합니다. (ROOT=${ROOT_DIR})"
-
-# Corporate-proxy reminder: prefer coding-only at work, execute at home/non-proxy
-if [[ -n "${HTTP_PROXY:-}${http_proxy:-}${HTTPS_PROXY:-}${https_proxy:-}" ]]; then
-  echo "[warn] 프록시가 감지되었습니다. 회사 정책에 따라 실행은 집/비프록시 환경에서 진행하는 것을 권장합니다." >&2
-  echo "       승인된 프록시/미러만 사용하고, 설치·실행이 막히면 코드는 작성만 하고 실행은 나중에 수행하세요." >&2
-fi
 
 if [[ $RUN_P0 -eq 1 ]]; then
   require_module "gdsfactory" "p0_current_mirror/env/install_min_env.sh 실행 또는 'pip install gdsfactory' 후 다시 시도하세요."
