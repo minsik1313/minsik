@@ -1,0 +1,8 @@
+Half-wave rectifier with smoothing capacitor (non-linear)
+V1 in 0 SIN(0 5 60)
+D1 in out DMOD
+R1 out 0 1k
+C1 out 0 10u
+.model DMOD D IS=1e-14 N=1
+.tran 2e-4 50m
+.end

@@ -1,0 +1,6 @@
+RC low-pass filter (1kHz sine through 1k/1u, fc~159Hz)
+V1 in 0 SIN(0 1 1000)
+R1 in out 1k
+C1 out 0 1u
+.tran 5u 5m
+.end
