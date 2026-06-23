@@ -205,3 +205,11 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# 프로젝트: 오디오 멀티모달 파인튜닝 산출물 (커밋 제외)
+/outputs/
+/data/*.jsonl
+/data/clips/
+/data/**/*.wav
+/data/**/*.mp3
+/data/**/*.flac

@@ -1,0 +1,35 @@
+# Qwen2.5-Omni-3B 오디오 멀티모달 QLoRA 설정 (참고/문서용)
+# train.sh가 사용하는 핵심 하이퍼파라미터를 한눈에 보기 위한 요약본.
+# 실제 실행은 scripts/train.sh 의 CLI 인자가 기준입니다.
+
+model: Qwen/Qwen2.5-Omni-3B
+
+# 파인튜닝 방식
+train_type: lora
+quant:
+  method: bnb          # bitsandbytes
+  bits: 4              # QLoRA (NF4)
+  compute_dtype: bfloat16
+torch_dtype: bfloat16
+
+# LoRA
+lora:
+  target_modules: all-linear
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+freeze_vit: true        # 오디오/비전 인코더 freeze, 텍스트 백본만 학습
+
+# 학습 루프 (8~12GB GPU 기준)
+train:
+  num_train_epochs: 1
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 16   # 유효 배치 = 16
+  gradient_checkpointing: true
+  learning_rate: 1.0e-4
+  warmup_ratio: 0.05
+  max_length: 2048                  # 오디오 길면 축소
+
+# VRAM 가이드
+#  8~12GB : 위 설정 그대로 (QLoRA 4bit 필수)
+#  16GB+  : quant 제거(LoRA bf16), batch_size 2까지 가능
