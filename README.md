@@ -55,6 +55,10 @@ make wave     # 파형(sim/wave.vcd) 생성 (gtkwave 로 확인)
 make clean    # 산출물 삭제
 ```
 
+> `sim/wave.vcd`(기본 N=16, P=4 실행 파형)는 저장소에 함께 보관되어 있어
+> `gtkwave sim/wave.vcd`로 바로 열어볼 수 있습니다. 컴파일 바이너리(`*.vvp`)는
+> 매번 재생성되는 산출물이라 git에서 제외됩니다.
+
 ---
 
 ## 실행 결과 (N=16, P=4, 100MHz)
