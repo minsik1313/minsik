@@ -1,8 +1,8 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1782250024" />
-    <testcase name="test_identity_weight" classname="test_systolic_array" file="/home/user/minsik/tb/test_systolic_array.py" lineno="18" time="0.0034618377685546875" sim_time_ns="170.0" ratio_time="49106.865013774106" />
-    <testcase name="test_known_matmul" classname="test_systolic_array" file="/home/user/minsik/tb/test_systolic_array.py" lineno="30" time="0.002118349075317383" sim_time_ns="159.99999999999997" ratio_time="75530.51660101293" />
-    <testcase name="test_random_matmuls" classname="test_systolic_array" file="/home/user/minsik/tb/test_systolic_array.py" lineno="43" time="0.27052736282348633" sim_time_ns="4720.0" ratio_time="17447.403289402948" />
+    <property name="random_seed" value="1782250825" />
+    <testcase name="test_identity_weight" classname="test_systolic_array" file="/home/user/minsik/tb/test_systolic_array.py" lineno="18" time="0.004038333892822266" sim_time_ns="170.0" ratio_time="42096.568662179714" />
+    <testcase name="test_known_matmul" classname="test_systolic_array" file="/home/user/minsik/tb/test_systolic_array.py" lineno="30" time="0.002294301986694336" sim_time_ns="159.99999999999997" ratio_time="69737.98607502856" />
+    <testcase name="test_random_matmuls" classname="test_systolic_array" file="/home/user/minsik/tb/test_systolic_array.py" lineno="43" time="0.2023477554321289" sim_time_ns="4560.0" ratio_time="22535.46124226471" />
   </testsuite>
 </testsuites>

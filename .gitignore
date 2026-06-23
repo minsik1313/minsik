@@ -211,6 +211,7 @@ sim_build/
 *.vcd
 *.fst
 
-# Keep curated run logs under results/ (override the *.log ignore above)
+# Keep curated run logs/waveforms under results/ (override the ignores above)
 !results/*.log
 !results/**/*.log
+!results/**/*.vcd
