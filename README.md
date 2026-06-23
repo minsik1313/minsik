@@ -19,6 +19,19 @@
 클론 → 설치 → 데이터 → 학습 → 추론 → 평가가 자동으로 진행됩니다.
 무료 T4(Turing)는 bf16 미지원이라 노트북이 자동으로 **fp16**으로 학습합니다.
 
+## Kaggle에서 실행 (API 키 불필요, 완전 무료)
+
+API 키/계정 연동 없이 브라우저에서 직접 실행하는 방법입니다. GPU 주 30시간 무료(T4×2 또는 P100).
+
+1. [kaggle.com/code](https://www.kaggle.com/code) → **New Notebook**
+2. 우측 패널 `File > Import Notebook` → 이 레포의 `notebooks/kaggle_finetune.ipynb` 업로드
+   (GitHub에서 raw 파일을 다운로드해 업로드하면 됩니다)
+3. 우측 패널 `Settings`에서 **Accelerator = GPU**, **Internet = On** 설정
+4. 셀을 위에서부터 순서대로 실행 → 클론·설치·데이터·학습·추론·평가까지 자동 진행
+5. 결과를 남기려면 우측 상단 **Save Version**(Save & Run All) 실행 → `Output` 탭에서 `outputs.zip` 다운로드
+
+Kaggle GPU(T4/P100)도 bf16 미지원이라 노트북이 자동으로 **fp16**으로 학습합니다.
+
 ## 빠른 시작
 
 ```bash
@@ -42,6 +55,9 @@ python scripts/eval.py --metric accuracy        # 분류/짧은텍스트
 
 ## 구조
 ```
+notebooks/
+  colab_finetune.ipynb    Google Colab용 (Open-in-Colab 배지로 실행)
+  kaggle_finetune.ipynb   Kaggle Notebooks용 (API 키 불필요, Import Notebook으로 실행)
 scripts/
   setup.sh          환경 셋업 + 설치 검증
   prepare_data.py   ms-swift JSONL 데이터 생성 (--synthesize 로 합성 샘플)
