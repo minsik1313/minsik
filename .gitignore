@@ -205,3 +205,10 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Open-source EDA flow artifacts
+digital/tb/sim_build/
+digital/tb/results.xml
+**/__pycache__/
+*.vcd
+runs/
