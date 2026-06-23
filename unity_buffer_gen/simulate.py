@@ -32,6 +32,11 @@ def run_deck(deck: str, workdir: str, expect: str) -> str:
     deck_path = os.path.join(workdir, "deck.spice")
     with open(deck_path, "w") as fh:
         fh.write(deck)
+    # remove any stale expected output so a failed run can't be mistaken for a
+    # success by finding a previous run's file
+    out_path_pre = os.path.join(workdir, expect)
+    if os.path.isfile(out_path_pre):
+        os.remove(out_path_pre)
     proc = subprocess.run(
         ["ngspice", "-b", "deck.spice"],
         cwd=workdir, capture_output=True, text=True, timeout=300,

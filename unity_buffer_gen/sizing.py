@@ -18,28 +18,36 @@ from .pdk import Pdk
 
 
 def _geometry_ok(pdk: Pdk, model: str, L: float, W: float, nf: int,
-                 is_pmos: bool, workdir: str) -> bool:
-    """True if the geometry simulates without a fatal/abort."""
+                 is_pmos: bool, workdir: str, corners=("tt",)) -> bool:
+    """True if the geometry simulates cleanly in *every* requested corner.
+
+    Some sky130 bins trip BSIM fatal checks only in certain corners (e.g. the
+    pfet L=0.25 bin has Drout<0 at ss/sf).  Default is the tt probe; pass the
+    full corner list to enforce corner-robust binning (note: that can force a
+    much larger pass device, since the current-dense pfet bins are the ones
+    with corner-specific model defects)."""
+    corners = corners or ("tt",)
     if is_pmos:
         body = ["Vs s 0 1.2", "Vg g 0 0.4", "Vd d 0 0.6",
                 f"XM d g s s {model} L={L} W={W} nf={nf} m=1"]
     else:
         body = ["Vd d 0 0.6", "Vg g 0 0.8",
                 f"XM d g 0 0 {model} L={L} W={W} nf={nf} m=1"]
-    deck = "\n".join([
-        f'.lib "{pdk.lib_path}" tt', *body,
-        ".control", "op", "print v(d)", "wrdata probe.txt v(d)",
-        ".endc", ".end",
-    ])
     wd = os.path.join(workdir, "_probe")
-    try:
-        sim.run_deck(deck, wd, "probe.txt")
-        return True
-    except sim.NgspiceError:
-        return False
+    for c in corners:
+        deck = "\n".join([
+            f'.lib "{pdk.lib_path}" {c}', ".option scale=1.0u", *body,
+            ".control", "op", "wrdata probe.txt v(d)", ".endc", ".end",
+        ])
+        try:
+            sim.run_deck(deck, wd, "probe.txt")
+        except sim.NgspiceError:
+            return False
+    return True
 
 
-_L_LADDER = [0.15, 0.25, 0.5, 0.7, 1.0, 1.5, 2.0, 3.0, 4.0, 6.0, 8.0]
+_L_LADDER = [0.15, 0.18, 0.25, 0.3, 0.35, 0.4, 0.5, 0.7, 1.0, 1.5, 2.0,
+             3.0, 4.0, 6.0, 8.0]
 
 
 def safe_geometry(pdk: Pdk, model: str, L: float, W: float, nf: int,
@@ -50,14 +58,21 @@ def safe_geometry(pdk: Pdk, model: str, L: float, W: float, nf: int,
     value at/above the request.  Raises if nothing works.
     """
     is_pmos = "pfet" in model
-    candidates = []
-    for nf_try in (nf, 1, 2, 4):
-        candidates.append((L, W, nf_try))
-    # snap L up the ladder, keep W, prefer nf then nf=1
+    candidates = [(L, W, nf)]
+    # prefer keeping the finger count and lengthening (preserves current
+    # density / drive); only then fall back to changing nf.  Dropping nf at a
+    # fixed L can find a clean-but-tiny bin and explode the multiplier.
     for Lsnap in _L_LADDER:
         if Lsnap >= L - 1e-9:
-            for nf_try in (nf, 1):
-                candidates.append((Lsnap, W, nf_try))
+            candidates.append((Lsnap, W, nf))
+    for nf_try in (1, 2, 4):
+        if nf_try != nf:
+            candidates.append((L, W, nf_try))
+    for Lsnap in _L_LADDER:
+        if Lsnap >= L - 1e-9:
+            for nf_try in (1, 2, 4):
+                if nf_try != nf:
+                    candidates.append((Lsnap, W, nf_try))
     seen = set()
     for cand in candidates:
         key = (round(cand[0], 4), round(cand[1], 4), cand[2])
