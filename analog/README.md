@@ -47,6 +47,10 @@ python3 analog/sizing/autosize.py
 OTA · LDO · BGR · OSC · PLL 블록별 스펙→구조→사이징→검증→레이아웃 체크리스트와
 설계 순서(의존성)는 [`docs/BLOCK_CHECKLIST.md`](../docs/BLOCK_CHECKLIST.md) 참고.
 
+### 구현된 블록
+- **BGR** — sky130A sub-1V Banba 밴드갭 (Vdd 1.2V → Vref 0.8V, TC 25 ppm/°C):
+  [`bgr/`](bgr/) · 실행 `make bgr-sim`
+
 ## 실제(sky130) 설계로의 전환
 현재는 PDK 없이 돌도록 generic Level-1 모델을 쓰지만, 두 군데만 바꾸면 실 PDK로 전환된다.
 1. `tech.py`의 `demo_model` → sky130 `.lib` include 로 교체:

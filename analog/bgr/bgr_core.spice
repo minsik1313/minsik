@@ -1,0 +1,67 @@
+* ============================================================================
+* sky130_bgr : Sub-1V current-mode (Banba) bandgap reference
+*   Supply  Vdd = 1.2 V
+*   Output  Vref ~ 0.80 V   (sub-bandgap, scaled by Rout/Rb)
+*   sky130A devices only.  gnd = global node 0.
+*
+* Ports:  vdd  vref
+*
+* Topology (Banba 1999, low-voltage current-mode):
+*   - OTA forces V(na) = V(nb).
+*   - Branch A: diode Q1 (1x)            -> na = V_EB1            (CTAT)
+*   - Branch B: R1 + Q2 (8x), and Rb     -> across R1 = dV_EB     (PTAT)
+*   - Each PMOS mirror leg carries  I = V_EB1/Rb + dV_EB/R1.
+*   - Output leg M3 copies I into Rout:  Vref = (Rout/Rb)*(V_EB1 + (Rb/R1)*dV_EB)
+*     The bracket is a ~1.25 V bandgap; Rout/Rb < 1 scales it BELOW 1.2 V,
+*     which is what lets a 1.2 V supply produce a clean 0.8 V reference.
+*
+* Why LVT core/load PMOS: the gate bias that delivers the ~2 uA leg current
+* with regular VT pfets sits at ~0.15 V (near gnd), out of a simple OTA's
+* output range. LVT pfets move that bias to mid-rail (~0.64 V) so a single
+* 5T OTA can drive it. See analog/bgr/README.md.
+*
+* Resistor lengths are sim-tuned (res_high_po_0p35, rsheet ~317 ohm/sq):
+*   l_r1  sets the PTAT/CTAT balance -> temperature coefficient (TC)
+*   l_ro  sets the absolute output magnitude (does NOT change TC in ppm/C)
+* ============================================================================
+.subckt sky130_bgr vdd vref
+.param l_rb=276      $ Ra = Rb ~ 250k
+.param l_r1=21       $ R1  ~ 19k   (PTAT/CTAT balance -> min TC)
+.param l_ro=164.5    $ Rout ~ 149k (scales bracket to 0.80 V)
+.param l_rbias=221   $ ~ 200k OTA tail bias
+
+* ---- core PMOS mirror (LVT), common gate = pg ----
+XM1 na  pg vdd vdd sky130_fd_pr__pfet_01v8_lvt w=10 l=1
+XM2 nb  pg vdd vdd sky130_fd_pr__pfet_01v8_lvt w=10 l=1
+XM3 vref pg vdd vdd sky130_fd_pr__pfet_01v8_lvt w=10 l=1
+
+* ---- branch A : diode Q1 (1x) ----
+XQ1 0 0 na sky130_fd_pr__pnp_05v5_W3p40L3p40
+XRA na 0 0 sky130_fd_pr__res_high_po_0p35 l={l_rb}
+
+* ---- branch B : R1 + Q2 (8x), and Rb ----
+XR1 nb nc 0 sky130_fd_pr__res_high_po_0p35 l={l_r1}
+XQ2 0 0 nc sky130_fd_pr__pnp_05v5_W3p40L3p40 m=8
+XRB nb 0 0 sky130_fd_pr__res_high_po_0p35 l={l_rb}
+
+* ---- output leg ----
+XRO vref 0 0 sky130_fd_pr__res_high_po_0p35 l={l_ro}
+Cout vref 0 2p
+
+* ---- 5T OTA : inputs na (pg-side, inverting) / nb (d1-side) ; output pg ----
+XMtail tail vbias 0 0 sky130_fd_pr__nfet_01v8 w=4 l=1
+XMin1  d1   nb tail 0 sky130_fd_pr__nfet_01v8 w=8 l=1
+XMin2  pg   na tail 0 sky130_fd_pr__nfet_01v8 w=8 l=1
+XMld1  d1   d1 vdd vdd sky130_fd_pr__pfet_01v8_lvt w=8 l=1
+XMld2  pg   d1 vdd vdd sky130_fd_pr__pfet_01v8_lvt w=8 l=1
+Cc pg 0 1p          $ dominant-pole compensation at OTA output
+
+* ---- OTA tail bias ----
+XRbias vdd vbias 0 sky130_fd_pr__res_high_po_0p35 l={l_rbias}
+XMbias vbias vbias 0 0 sky130_fd_pr__nfet_01v8 w=4 l=1
+
+* ---- startup : kicks pg low when dead (vref ~ 0), releases when live ----
+XMdet sd  vref vdd vdd sky130_fd_pr__pfet_01v8 w=1 l=2
+XMdpd sd  sd  0    0   sky130_fd_pr__nfet_01v8 w=1 l=8
+XMst  pg  sd  0    0   sky130_fd_pr__nfet_01v8 w=2 l=1
+.ends sky130_bgr

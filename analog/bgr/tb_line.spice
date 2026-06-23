@@ -1,0 +1,23 @@
+* tb_line : line regulation + supply rejection.
+* Start at 1.2 V, then sweep Vdd slowly (quasi-static) across 1.0..1.4 V and
+* sample Vref. A slow ramp keeps the loop settled so dVref/dVdd is the DC
+* line sensitivity. (A bare .dc Vdd would converge to the dead state.)
+.include "pdk.spice"
+.include "bgr_core.spice"
+
+* 0->1.2 (startup), settle, 1.2->1.0, then 1.0->1.4 at 0.2 mV/us
+Vdd vdd 0 PWL(0 0 50u 1.2 300u 1.2 1300u 1.0 3300u 1.4)
+Xbgr vdd vref sky130_bgr
+
+.control
+set temp=27
+tran 0.5u 3300u uic
+* on the 1.0->1.4 up-ramp (starts t=1300u, 0.2mV/us):
+meas tran vref_1p0 FIND v(vref) AT=1300u
+meas tran vref_1p1 FIND v(vref) AT=1800u
+meas tran vref_1p2 FIND v(vref) AT=2300u
+meas tran vref_1p3 FIND v(vref) AT=2800u
+meas tran vref_1p4 FIND v(vref) AT=3300u
+echo "LINE 1.0=$&vref_1p0 1.1=$&vref_1p1 1.2=$&vref_1p2 1.3=$&vref_1p3 1.4=$&vref_1p4"
+.endc
+.end

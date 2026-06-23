@@ -1,0 +1,23 @@
+* tb_tc : Vref vs temperature -> temperature coefficient (TC)
+* Each temperature is solved by a Vdd-ramp transient so the real startup
+* circuit brings the core to its live operating point (the dead state is a
+* valid DC solution, so a bare .op/.dc temp can converge to Vref=0).
+.include "pdk.spice"
+.include "bgr_core.spice"
+
+Vdd vdd 0 PWL(0 0 50u 1.2 2m 1.2)
+Xbgr vdd vref sky130_bgr
+
+.control
+set wr_singlescale
+let vmax = -1
+let vmin =  9
+let v27  =  0
+foreach tt -40 -20 0 27 50 85 125
+  set temp=$tt
+  tran 0.5u 600u uic
+  meas tran vr FIND v(vref) AT=550u
+  echo "TCPT $tt $&vr"
+end
+.endc
+.end

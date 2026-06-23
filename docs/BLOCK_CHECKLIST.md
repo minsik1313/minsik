@@ -86,26 +86,28 @@ OTA(에러앰프) + BGR(기준) 위에 올라가는 블록 → **OTA·BGR 검증
 
 ## 3. BGR (Bandgap Reference)
 체계의 기준전압원 → **가장 먼저 설계**(OTA/LDO/PLL이 의존).
+**[~] 1차 구현 완료** — sky130A sub-1V Banba, Vdd 1.2V→Vref 0.8V: `analog/bgr/`
+(Vref@27=0.799V, TC=25 ppm/°C, self-start ✓). 상세는 `analog/bgr/README.md`.
 
 ### 스펙
-- [ ] 기준전압 V_ref [V] / 온도계수 (TC) [ppm/°C]
-- [ ] 라인 감도 / PSRR / 기동시간
+- [x] 기준전압 V_ref [V] / 온도계수 (TC) [ppm/°C] — 0.799V / 25 ppm/°C
+- [~] 라인 감도 / PSRR / 기동시간 — 라인~52mV/V·기동 self-start 확인 (PSRR 미측정)
 - [ ] 정적전류 / 트림 비트 수 (있다면)
 - [ ] 출력 노이즈 / 면적
 
 ### 구조 선정
-- [ ] BJT(vertical PNP) vs MOS-only(서브스레숄드) 기준
-- [ ] 전압모드(전통형) vs 전류모드(저전압 Banba형)
-- [ ] 앰프형(OTA 필요) vs 자기바이어스형
-- [ ] 곡률보정 유무
+- [x] BJT(vertical PNP) vs MOS-only(서브스레숄드) 기준 — vertical PNP 채택
+- [x] 전압모드(전통형) vs 전류모드(저전압 Banba형) — **Banba**(0.8V<1.25V라 필수)
+- [x] 앰프형(OTA 필요) vs 자기바이어스형 — 5T OTA (LVT 부하로 코어 바이어스 정렬)
+- [ ] 곡률보정 유무 — 미적용(1차만), 개선 항목
 
 ### 사이징·검증
-- [ ] PTAT / CTAT 합성 → 1차 TC 상쇄 확인
-- [ ] V_ref vs 온도 스윕 (−40~125°C) → TC 측정 (`.meas`)
-- [ ] **기동 회로** 동작 검증 (zero-current 상태 탈출)
-- [ ] 라인 스윕 / PSRR / 노이즈
+- [x] PTAT / CTAT 합성 → 1차 TC 상쇄 확인 (M=Rb/R1 시뮬 튜닝)
+- [x] V_ref vs 온도 스윕 (−40~125°C) → TC 측정 (`tb_tc.spice`)
+- [x] **기동 회로** 동작 검증 (zero-current 상태 탈출, `tb_startup.spice`)
+- [~] 라인 스윕 / PSRR / 노이즈 — 라인 완료(`tb_line.spice`), PSRR·노이즈 미완
 - [ ] 트림 코드별 V_ref 분포 (몬테카를로)
-- [ ] PVT 코너 TC 목표 이내
+- [ ] PVT 코너 TC 목표 이내 (현재 tt만; ss/ff 미실행)
 
 ### 레이아웃
 - [ ] BJT/저항 common-centroid·더미, 열 대칭
