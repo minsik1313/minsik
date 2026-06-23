@@ -213,3 +213,5 @@ output/_work/
 output/op_vout.txt
 # trimmed model lib embeds absolute PDK paths (regenerate per machine)
 sky130_fast.lib.spice
+s.txt
+*.txt
