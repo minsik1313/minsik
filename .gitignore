@@ -208,6 +208,9 @@ __marimo__/
 
 # RTL simulation build artifacts
 sim_build/
-results.xml
 *.vcd
 *.fst
+
+# Keep curated run logs under results/ (override the *.log ignore above)
+!results/*.log
+!results/**/*.log

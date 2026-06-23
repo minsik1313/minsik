@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1782250027" />
+    <testcase name="test_end_to_end_matmul" classname="test_mtu_top" file="/home/user/minsik/tb/test_mtu_top.py" lineno="18" time="0.16912555694580078" sim_time_ns="4880.0" ratio_time="28854.30261473658" />
+  </testsuite>
+</testsuites>
