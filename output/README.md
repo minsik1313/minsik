@@ -1,13 +1,21 @@
 # Sample generated output
 
-These files were produced by:
+Produced by:
 
 ```bash
 python -m unity_buffer_gen --outdir output
 ```
 
-for the default 1.2 V → 0.8 V / 0–10 mA / 1 µF / 1 Ω spec. See `REPORT.md` for
-the verified performance.
+for the default 1.2 V → 0.8 V / 0–10 mA / 1 µF / 1 Ω spec.
+
+| File | Contents |
+|---|---|
+| `REPORT.md` | verified performance summary |
+| `DEVICES.md` | per-device settings + operating point (W/L/nf/m, Id, gm, ro, caps) |
+| `schematic.svg` / `schematic.png` | annotated circuit schematic |
+| `unity_buffer.spice` | the sized buffer `.subckt` |
+| `tb_*.spice` | op / dc-load / ac-loop / transient testbenches |
+| `*.json` | machine-readable spec / sizing / bias / metrics |
 
 To **run** the testbenches you also need the trimmed model library
 `sky130_fast.lib.spice`, which embeds absolute paths to your local sky130 PDK

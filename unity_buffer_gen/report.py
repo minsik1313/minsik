@@ -128,6 +128,32 @@ def emit_artifacts(res: DesignResult, pdk: Pdk, outdir: str) -> dict:
     w("bias.json", b.to_json())
     import json
     w("metrics.json", json.dumps(res.metrics, indent=2, default=str))
+
+    # device operating-point table + schematic
+    try:
+        from . import oppoint, schematic
+        vals = oppoint.extract(pdk, s, sz, b, s.iload_max,
+                               os.path.join(outdir, "_work"))
+        dev_md = ["# Device settings & operating point "
+                  f"(at Iload = {s.iload_max*1e3:g} mA, {s.corner})\n",
+                  "## Transistors\n", oppoint.device_table_md(s, sz, b, vals),
+                  "\n## Passives / sources\n", oppoint.passives_md(s, b),
+                  "\n\n_Cgs/Cgd use ngspice's signed trans-capacitance "
+                  "convention; magnitudes shown. ro = 1/gds._\n"]
+        w("DEVICES.md", "\n".join(dev_md))
+        res.metrics["_device_op"] = vals
+    except Exception as e:  # pragma: no cover - keep emission robust
+        w("DEVICES.md", f"# Device table unavailable: {e}\n")
+    try:
+        from . import schematic
+        sp = schematic.draw(s, sz, b, os.path.join(outdir, "schematic.png"))
+        files[os.path.basename(sp)] = sp
+        svg = os.path.splitext(sp)[0] + ".svg"
+        if os.path.isfile(svg):
+            files["schematic.svg"] = svg
+    except Exception:
+        pass
+
     w("REPORT.md", render_report(res, pdk))
     pdk.lib_path = saved_lib
     return files
