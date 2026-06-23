@@ -23,8 +23,8 @@ jobs:
       - name: Run digital regression
         run: make digital-sim
 
-  analog-sweep:
-    name: Analog sizing sweep (ngspice)
+  analog-autosize:
+    name: Analog autosizer (voltage-domain-aware, ngspice)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,5 +32,5 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y ngspice
-      - name: Run sizing sweep
-        run: make analog-sweep
+      - name: Run autosizer
+        run: make analog-autosize

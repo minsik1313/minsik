@@ -12,11 +12,12 @@
 ## Phase 1 — 자동화 파이프라인
 - [x] 디지털 레퍼런스 블록 RTL (`digital/rtl/boxcar_filter.v`)
 - [x] 디지털 회귀(cocotb) green (`make digital-sim`)
-- [x] 아날로그 사이징 스윕 골격 (`make analog-sweep`)
+- [x] 전압 도메인 인지 아날로그 자동화: 소자 flavor·구조·사이징 선정 (`make analog-autosize`)
+- [x] Codespaces devcontainer (`.devcontainer/`) — 열면 툴 자동설치
 - [x] CI 회귀 워크플로 (`.github/workflows/ci.yml`)
 - [ ] 디지털 RTL→GDS(OpenLane2) sign-off clean
 - [ ] 아날로그 블록 Xschem→Magic 레이아웃 + DRC/LVS clean
-- [ ] 사이징 스윕을 sky130 모델 + MOBO로 전환
+- [ ] 자동화를 sky130 모델 + gm/Id + MOBO로 전환 (현재 generic Level-1 데모)
 
 ## Phase 2 — 타겟 회로 설계·검증
 - [ ] PRD 확정 (`docs/PRD_TEMPLATE.md` 작성)

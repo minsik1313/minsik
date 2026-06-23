@@ -1,0 +1,11 @@
+{
+  "name": "fabless-osic-bootstrap",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python"]
+    }
+  },
+  "//": "Lightweight env for the digital regression + analog autosizer demos. For full layout / RTL-to-GDS (OpenLane2, Magic, KLayout, sky130 PDK) use the image 'hpretl/iic-osic-tools' instead — see docs/SETUP.md."
+}

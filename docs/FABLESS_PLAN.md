@@ -128,8 +128,15 @@
   - **AI 보조(2025~):** LLM 에이전트형(AutoSizer·AnalogAgent 등)으로 스펙→초기 사이징
     가이드 — 실험적, 검증 필수
   - **PVT 코너 스윕** 자동화로 강건성 확보
-- **Action:** 핵심 블록(bandgap, LDO, comparator 등)별 파라미터화 스키매틱 + 자동 사이징
-  스크립트 작성. 결과는 항상 수작업 검토.
+- **전압 도메인 인지(중요):** 자동화는 반드시 **전원 전압 → 소자 flavor → 구조 → 사이징**을
+  연동해야 한다. sky130 기준 1.8V 코어는 thin-oxide(`nfet_01v8`), 3.3~5V는
+  thick-oxide(`nfet_g5v0d10v5`)를 써야 하며, 소자 **Vds 정격**이 전원을 못 덮으면 자동 승격.
+  게인 부족 시 단단(common-source)→다단(two-stage)으로 구조도 자동 승격.
+  → 구현: `analog/sizing/`(`tech.py` 도메인/소자 라이브러리, `topology.py` 구조,
+  `autosize.py` 오케스트레이터). 실행 `make analog-autosize`.
+- **Action:** 핵심 블록(bandgap, LDO, comparator 등)별 파라미터화 스키매틱 + 위 자동화로
+  사이징. 현재는 generic Level-1 데모이며, sky130 `.lib` + gm/Id + MOBO로 전환.
+  결과는 항상 수작업 검토.
 
 ### 2.6 아날로그 레이아웃 자동화
 - **현실:** 가장 미성숙 영역. 정합(matching)·기생·웰 등은 수작업 비중 큼.
