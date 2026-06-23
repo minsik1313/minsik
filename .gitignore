@@ -205,3 +205,13 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# RTL simulation build artifacts
+sim_build/
+*.vcd
+*.fst
+
+# Keep curated run logs/waveforms under results/ (override the ignores above)
+!results/*.log
+!results/**/*.log
+!results/**/*.vcd

@@ -1,0 +1,8 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1782250825" />
+    <testcase name="test_identity_weight" classname="test_systolic_array" file="/home/user/minsik/tb/test_systolic_array.py" lineno="18" time="0.004038333892822266" sim_time_ns="170.0" ratio_time="42096.568662179714" />
+    <testcase name="test_known_matmul" classname="test_systolic_array" file="/home/user/minsik/tb/test_systolic_array.py" lineno="30" time="0.002294301986694336" sim_time_ns="159.99999999999997" ratio_time="69737.98607502856" />
+    <testcase name="test_random_matmuls" classname="test_systolic_array" file="/home/user/minsik/tb/test_systolic_array.py" lineno="43" time="0.2023477554321289" sim_time_ns="4560.0" ratio_time="22535.46124226471" />
+  </testsuite>
+</testsuites>
