@@ -1,0 +1,11 @@
+{
+  "name": "fabless-osic (lightweight)",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python"]
+    }
+  },
+  "__comment": "Lightweight env for the digital regression + analog autosizer demos. For full layout/RTL2GDS (Magic/KLayout/OpenLane2 + PDKs) switch 'image' to 'hpretl/iic-osic-tools:latest' and drop postCreateCommand — see docs/SETUP.md."
+}

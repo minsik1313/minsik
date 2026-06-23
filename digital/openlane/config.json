@@ -1,0 +1,10 @@
+{
+  "DESIGN_NAME": "boxcar_filter",
+  "VERILOG_FILES": "dir::../rtl/boxcar_filter.v",
+  "CLOCK_PORT": "clk",
+  "CLOCK_PERIOD": 10,
+  "PDK": "sky130A",
+  "FP_CORE_UTIL": 40,
+  "PL_TARGET_DENSITY_PCT": 55,
+  "__comment": "Starter OpenLane2 config. Run: 'openlane digital/openlane/config.json' inside the IIC-OSIC-TOOLS container (needs OpenLane2 + sky130A PDK). See docs/FABLESS_PLAN.md §2.8."
+}

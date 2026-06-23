@@ -1,0 +1,18 @@
+* tb_startup : Vdd step -> verify the bandgap self-starts (escapes Vref=0)
+* and measure settling time to the final reference.
+.include "pdk.spice"
+.include "bgr_core.spice"
+
+* fast Vdd step (1us edge) at room temperature
+Vdd vdd 0 PWL(0 0 1u 1.2 1m 1.2)
+Xbgr vdd vref sky130_bgr
+
+.control
+set temp=27
+tran 0.2u 800u uic
+meas tran vfin   FIND v(vref) AT=780u
+* settling: time to first reach within 1% of final value
+meas tran tsettle WHEN v(vref)=0.99*vfin RISE=1
+echo "STARTUP vfin=$&vfin tsettle=$&tsettle"
+.endc
+.end
