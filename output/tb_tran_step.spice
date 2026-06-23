@@ -1,0 +1,30 @@
+* Transient load step
+.lib "sky130_fast.lib.spice" tt
+.temp 27.0
+.param mc_mm_switch=0
+.subckt unity_buffer VDD VSS VREF VOUT IBIAS
+* ---- bias mirror (NMOS): reference, tail source, output preload ----
+XMB0 IBIAS IBIAS VSS VSS sky130_fd_pr__nfet_01v8 L=0.5 W=10.0 nf=1 m=2
+XMB1 TAIL IBIAS VSS VSS sky130_fd_pr__nfet_01v8 L=0.5 W=10.0 nf=1 m=4
+XMBPRE VOUT IBIAS VSS VSS sky130_fd_pr__nfet_01v8 L=0.5 W=10.0 nf=1 m=20
+* ---- NMOS input pair (M1.g=VOUT feedback, M2.g=VREF) ----
+XM1 NA VOUT TAIL VSS sky130_fd_pr__nfet_01v8 L=0.5 W=10.0 nf=1 m=4
+XM2 OTA VREF TAIL VSS sky130_fd_pr__nfet_01v8 L=0.5 W=10.0 nf=1 m=4
+* ---- PMOS current-mirror load ----
+XM3 NA NA VDD VDD sky130_fd_pr__pfet_01v8 L=1.0 W=7.0 nf=1 m=32
+XM4 OTA NA VDD VDD sky130_fd_pr__pfet_01v8 L=1.0 W=7.0 nf=1 m=32
+* ---- PMOS pass device ----
+XMP VOUT OTA VDD VDD sky130_fd_pr__pfet_01v8 L=0.25 W=5.0 nf=4 m=65
+.ends unity_buffer
+VDD VDD 0 1.2
+VREF VREF 0 0.8
+IREF VDD IBIAS 1e-05
+XBUF VDD 0 VREF VOUT IBIAS unity_buffer
+COUT VOUT 0 1e-06
+.nodeset v(VOUT)=0.8 v(XBUF.OTA)=0.5 v(XBUF.NA)=0.25 v(XBUF.TAIL)=0.18
+ILOAD VOUT 0 PWL(0 0 50u 0 50.5u 0.01 150u 0.01 150.5u 0 200u 0)
+.control
+tran 0.2u 200u
+wrdata tran_step.txt v(VOUT)
+.endc
+.end
