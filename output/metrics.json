@@ -1,0 +1,21 @@
+{
+  "vout_fullload_op": 0.808640291,
+  "vout_noload_op": 0.813458269,
+  "vota_fullload": 0.467073045,
+  "vota_noload": 0.755164801,
+  "rout_chord": 0.48028599999999644,
+  "rout_incremental": 7.271879999999342,
+  "vout_noload": 0.813458269,
+  "vout_fullload": 0.808655409,
+  "dc_loop_gain_db": 47.2637769,
+  "ugf_hz": 927183.825684109,
+  "phase_margin_deg": 177.7556169517128,
+  "undershoot_v": -0.008153681999999995,
+  "overshoot_v": 0.013461516000000007,
+  "tran_stable": true,
+  "reg_full_ok": true,
+  "reg_noload_ok": true,
+  "rout_ok": true,
+  "pm_ok": true,
+  "stable_ok": true
+}

@@ -1,0 +1,28 @@
+* AC loop gain, Iload=0.01A
+.lib "sky130_fast.lib.spice" tt
+.temp 27.0
+.param mc_mm_switch=0
+.subckt unity_buffer_fb VDD VSS VREF VOUT FB IBIAS
+XMB0 IBIAS IBIAS VSS VSS sky130_fd_pr__nfet_01v8 L=0.5 W=10.0 nf=1 m=2
+XMB1 TAIL IBIAS VSS VSS sky130_fd_pr__nfet_01v8 L=0.5 W=10.0 nf=1 m=4
+XMBPRE VOUT IBIAS VSS VSS sky130_fd_pr__nfet_01v8 L=0.5 W=10.0 nf=1 m=20
+XM1 NA FB TAIL VSS sky130_fd_pr__nfet_01v8 L=0.5 W=10.0 nf=1 m=4
+XM2 OTA VREF TAIL VSS sky130_fd_pr__nfet_01v8 L=0.5 W=10.0 nf=1 m=4
+XM3 NA NA VDD VDD sky130_fd_pr__pfet_01v8 L=1.0 W=7.0 nf=1 m=32
+XM4 OTA NA VDD VDD sky130_fd_pr__pfet_01v8 L=1.0 W=7.0 nf=1 m=32
+XMP VOUT OTA VDD VDD sky130_fd_pr__pfet_01v8 L=0.25 W=5.0 nf=4 m=65
+.ends unity_buffer_fb
+VDD VDD 0 1.2
+VREF VREF 0 0.8
+IREF VDD IBIAS 1e-05
+XBUF VDD 0 VREF VOUT FB IBIAS unity_buffer_fb
+VINJ VOUT FB DC 0 AC 1
+COUT VOUT 0 1e-06
+ILOAD VOUT 0 0.01
+.nodeset v(VOUT)=0.8 v(XBUF.OTA)=0.5 v(XBUF.NA)=0.25 v(XBUF.TAIL)=0.18
+.control
+ac dec 40 1 1e9
+let loop = -v(VOUT)/v(FB)
+wrdata ac_loop.txt vdb(loop) vp(loop)
+.endc
+.end

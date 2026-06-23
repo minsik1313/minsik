@@ -1,0 +1,16 @@
+* DC transfer testbench: sweep VIN, Vout should follow (unity gain).
+* Needs the sky130 model lib: pass it on the ngspice command line or edit below.
+* Example:  ngspice -b tb_transfer.spice
+.lib "sky130_fast.lib.spice" tt
+.option scale=1.0u
+.include "unity_buffer.spice"
+VDD VDD 0 1.2
+IREF VDD IBIAS 10u
+VIN VIN 0 0.5
+XB VDD 0 VIN VOUT IBIAS unity_buffer
+COUT VOUT 0 1u
+.control
+dc VIN 0 0.85 0.01
+wrdata transfer.txt v(VOUT)
+.endc
+.end

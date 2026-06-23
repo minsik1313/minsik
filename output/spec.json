@@ -1,0 +1,14 @@
+{
+  "vdd": 1.2,
+  "vout": 0.8,
+  "vref": 0.8,
+  "iload_max": 0.01,
+  "iload_min": 0.0,
+  "cout": 1e-06,
+  "cout_esr": 0.0,
+  "error_res": 1.0,
+  "pm_min": 45.0,
+  "reg_tol": 0.025,
+  "temp": 27.0,
+  "corner": "tt"
+}

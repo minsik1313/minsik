@@ -1,0 +1,53 @@
+{
+  "corners": {
+    "tt": {
+      "vout_noload": 0.8134647119999989,
+      "vout_fullload": 0.8086554089999993,
+      "rout_chord": 0.48093029999995984,
+      "iq_noload": 0.00013195901612000002,
+      "isup_fullload": 0.010131838738
+    },
+    "ss": {
+      "error": "ngspice did not produce settle.txt.\n--- stdout ---\n\nNote: No compatibility mode selected!\n\n\nCircuit: *lib \"/tmp/claude-0"
+    },
+    "ff": {
+      "vout_noload": 0.812032875,
+      "vout_fullload": 0.8058899079999997,
+      "rout_chord": 0.6142967000000277,
+      "iq_noload": 0.00013289905136000004,
+      "isup_fullload": 0.010132735309999998
+    },
+    "sf": {
+      "error": "ngspice did not produce settle.txt.\n--- stdout ---\n\nNote: No compatibility mode selected!\n\n\nCircuit: *lib \"/tmp/claude-0"
+    },
+    "fs": {
+      "vout_noload": 0.8085131610000004,
+      "vout_fullload": 0.802925944999999,
+      "rout_chord": 0.5587216000001338,
+      "iq_noload": 0.00013070564152,
+      "isup_fullload": 0.010130566241999999
+    }
+  },
+  "line_reg": {
+    "dvdd": 0.10000000000000009,
+    "dvout": -0.005083270999999279,
+    "line_reg_mv_per_v": -50.83270999999274,
+    "vout_vdd_lo": 0.8111840059999998,
+    "vout_vdd_hi": 0.8061007350000006
+  },
+  "vdd_scan": {
+    "1.1": 1.0386883014,
+    "1.15": 0.8646990650200008,
+    "1.2": 0.8111840059999998,
+    "1.25": 0.8071240800000007,
+    "1.3": 0.8061007350000006
+  },
+  "ac": {
+    "dc_gain_db": 47.2637769,
+    "ugf_hz": 927183.825684109
+  },
+  "tran": {
+    "undershoot_mv": -8.153681999999996,
+    "overshoot_mv": 13.461516000000007
+  }
+}
