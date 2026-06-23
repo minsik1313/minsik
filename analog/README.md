@@ -43,6 +43,10 @@ python3 analog/sizing/autosize.py
 - **1.8V 고게인(30dB)** → 단단 부족 → **two_stage 로 구조 자동 승격**
 - **5V** → **thick-oxide `nfet_g5v0d10v5` 소자 flavor 자동 선택** (1.8V 소자는 과전압)
 
+## 코어 블록 설계 체크리스트
+OTA · LDO · BGR · OSC · PLL 블록별 스펙→구조→사이징→검증→레이아웃 체크리스트와
+설계 순서(의존성)는 [`docs/BLOCK_CHECKLIST.md`](../docs/BLOCK_CHECKLIST.md) 참고.
+
 ## 실제(sky130) 설계로의 전환
 현재는 PDK 없이 돌도록 generic Level-1 모델을 쓰지만, 두 군데만 바꾸면 실 PDK로 전환된다.
 1. `tech.py`의 `demo_model` → sky130 `.lib` include 로 교체:

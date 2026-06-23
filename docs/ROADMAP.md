@@ -21,6 +21,12 @@
 
 ## Phase 2 — 타겟 회로 설계·검증
 - [ ] PRD 확정 (`docs/PRD_TEMPLATE.md` 작성)
+- [ ] 코어 블록 설계: OTA / LDO / BGR / OSC / PLL — 블록별 체크리스트는 `docs/BLOCK_CHECKLIST.md`
+  - [ ] BGR (기준전압, 최우선)
+  - [ ] OTA (공용 증폭기 코어)
+  - [ ] LDO (OTA+BGR 의존)
+  - [ ] OSC (BGR 바이어스, PLL용 VCO)
+  - [ ] PLL (전 블록 통합, 최후)
 - [ ] 아날로그/디지털 블록 통합
 - [ ] PEX 후 포스트레이아웃 시뮬 통과
 
