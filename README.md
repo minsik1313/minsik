@@ -30,12 +30,21 @@ C[i] = A[i] * B[i]      (i = 0 .. N-1)
 ├── tb/
 │   └── tb_compare.v      # 비교 testbench (검증 + 시간 측정)
 ├── Makefile
+├── .devcontainer/devcontainer.json   # Codespaces 자동 환경 설정
 └── README.md
 ```
 
 ---
 
 ## 실행 방법
+
+### GitHub Codespaces
+
+이 저장소를 Codespaces로 열면 `.devcontainer/devcontainer.json`의
+`postCreateCommand`가 자동으로 `iverilog`, `gtkwave`를 설치합니다.
+별도 설정 없이 바로 아래 `make` 명령을 실행할 수 있습니다.
+
+### 로컬
 
 [Icarus Verilog](http://iverilog.icarus.com/) 필요 (`apt-get install iverilog`).
 

@@ -1,0 +1,15 @@
+{
+  "name": "cpu-gpu-rtl",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  },
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y iverilog gtkwave",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mshr-h.veriloghdl"
+      ]
+    }
+  }
+}
