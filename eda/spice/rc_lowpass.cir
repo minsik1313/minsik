@@ -1,0 +1,20 @@
+* RC 1차 저역통과 필터 — AC + 과도 해석 (ngspice)
+* 컴포넌트 값은 환경변수로 주입되는 .param 으로 스윕 (Monte Carlo)
+.param Rval=1k
+.param Cval=100n
+
+V1 in 0 AC 1 SIN(0 1 1k)
+R1 in out {Rval}
+C1 out 0 {Cval}
+
+.ac dec 20 10 1Meg
+.tran 10u 5m
+
+.control
+  run
+  * -3dB 차단주파수 측정용 데이터 출력
+  let fc = 1/(2*3.14159265*Rval*Cval)
+  print fc
+  wrdata $simout out
+.endc
+.end

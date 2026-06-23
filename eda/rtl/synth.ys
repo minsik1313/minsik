@@ -1,0 +1,10 @@
+# Yosys 합성 스크립트 — alu.v 를 일반 게이트로 합성하고 통계 출력
+#   yosys eda/rtl/synth.ys
+read_verilog eda/rtl/alu.v
+hierarchy -check -top alu
+proc; opt; fsm; opt; memory; opt
+techmap; opt
+stat
+# ASIC 셀 라이브러리가 있으면:
+#   dfflibmap -liberty <lib>.lib ; abc -liberty <lib>.lib ; stat
+write_verilog -noattr /projects/rtl-synth/alu_netlist.v

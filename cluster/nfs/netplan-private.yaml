@@ -1,0 +1,19 @@
+# 10GbE 전용망 설정 (netplan). /etc/netplan/60-private.yaml 에 배치.
+#   sudo cp cluster/nfs/netplan-private.yaml /etc/netplan/60-private.yaml
+#   sudo netplan apply
+#
+# 인터페이스 이름은 `ip link`로 실제 10GbE NIC 이름 확인 후 교체.
+# Machine A는 .10, Machine B는 .11 로 addresses 만 바꿔 동일 파일 사용.
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    # ── 10GbE 전용 직결 링크 (DAC) ──
+    priv10g:
+      match:
+        name: enp*s0f0    # ← `ip link` 로 확인한 10GbE 포트명으로 교체
+      set-name: priv10g
+      addresses:
+        - 192.168.50.10/24   # Machine A. B에서는 192.168.50.11/24
+      mtu: 9000              # 점보프레임: NFS/대용량 전송 성능 향상 (양 머신 동일하게)
+      # 직결 링크라 gateway/DNS 불필요 (인터넷은 온보드 NIC 사용)
