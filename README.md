@@ -9,6 +9,15 @@
 ## 요구사항
 - NVIDIA GPU 8GB 이상 (16GB 권장), CUDA 12.x
 - Python 3.10+
+- GPU가 없다면 아래 **Colab에서 실행** 참고 (GitHub Codespaces는 2025-08 GPU 지원 종료)
+
+## Colab에서 실행 (GPU 없을 때 권장)
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/minsik1313/minsik/blob/claude/local-multimodal-model-8mluhh/notebooks/colab_finetune.ipynb)
+
+`notebooks/colab_finetune.ipynb`를 Colab에서 열고 `런타임 > 런타임 유형 변경 > GPU` 설정 후 셀을 순서대로 실행하면
+클론 → 설치 → 데이터 → 학습 → 추론 → 평가가 자동으로 진행됩니다.
+무료 T4(Turing)는 bf16 미지원이라 노트북이 자동으로 **fp16**으로 학습합니다.
 
 ## 빠른 시작
 

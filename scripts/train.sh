@@ -13,6 +13,10 @@ TRAIN_FILE="${TRAIN_FILE:-data/train.jsonl}"
 VAL_FILE="${VAL_FILE:-data/val.jsonl}"
 EPOCHS="${EPOCHS:-1}"
 MAX_LENGTH="${MAX_LENGTH:-2048}"   # 오디오 시퀀스가 길면 OOM 회피 위해 축소
+# dtype: Ampere+ 는 bfloat16 권장. Colab T4(Turing)는 bf16 미지원 → float16 주입.
+#   예) TORCH_DTYPE=float16 COMPUTE_DTYPE=float16 bash scripts/train.sh
+TORCH_DTYPE="${TORCH_DTYPE:-bfloat16}"
+COMPUTE_DTYPE="${COMPUTE_DTYPE:-bfloat16}"
 
 # 오디오 인코더(및 비전) freeze → 텍스트 백본 linear 레이어에만 LoRA
 # 8~12GB: QLoRA(4bit). OOM 시 MAX_LENGTH/배치 더 줄이기.
@@ -23,8 +27,8 @@ swift sft \
   --train_type lora \
   --quant_method bnb \
   --quant_bits 4 \
-  --bnb_4bit_compute_dtype bfloat16 \
-  --torch_dtype bfloat16 \
+  --bnb_4bit_compute_dtype "$COMPUTE_DTYPE" \
+  --torch_dtype "$TORCH_DTYPE" \
   --target_modules all-linear \
   --freeze_vit true \
   --lora_rank 8 \
