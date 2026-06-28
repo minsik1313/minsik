@@ -1,25 +1,38 @@
-# netlist → SVG 변환기 (analog schematic auto-placement)
+# netlist → SVG/HTML 변환기 (analog schematic auto-placement)
 
-SPICE MOSFET netlist 를 입력받아 **배치 규칙(placement rules)** 을 적용하고
-회로도(schematic)를 **SVG** 로 그려주는 순수 Python 도구입니다. 외부 의존성 없음.
+SPICE netlist 를 입력받아 **배치 규칙(placement rules)** 을 적용하고
+회로도(schematic)를 **HTML / SVG** 로 그려주는 순수 Python 도구입니다. 외부 의존성 없음.
 
 ```
-python -m netlist_svg examples/ota_5t.sp -o examples/ota_5t.svg -t "5T OTA"
+# HTML (기본) — 회로도 + 컴포넌트 라이브러리 패널
+python -m netlist_svg examples/ota_5t.sp -o examples/ota_5t.html
+
+# SVG 만
+python -m netlist_svg examples/ota_5t.sp -f svg -o examples/ota_5t.svg
 ```
 
-결과 예시 — 5-트랜지스터 OTA (NMOS 입력쌍):
+결과 예시 — 5-트랜지스터 OTA (NMOS 입력쌍, R+diode 바이어스):
 
 ![5T OTA](examples/ota_5t.svg)
+
+## 심볼 라이브러리 (점점 추가 중)
+
+| 심볼 | netlist prefix | 상태 |
+|------|----------------|------|
+| NMOS / PMOS | `M` | ✅ |
+| Resistor    | `R` | ✅ |
+| Diode       | `D` | ✅ |
 
 ## 구조
 
 | 파일 | 역할 |
 |------|------|
-| `netlist_svg/parser.py`   | SPICE netlist 파싱 → `Device` / `Netlist` |
-| `netlist_svg/placer.py`   | **배치 규칙** : net 전압 레벨링 + 컬럼 할당 |
-| `netlist_svg/symbols.py`  | MOSFET 심볼(SVG) 생성 |
-| `netlist_svg/renderer.py` | 배치 결과 → 와이어 라우팅 + SVG 출력 |
-| `examples/ota_5t.sp`      | 5T OTA 예제 netlist |
+| `netlist_svg/parser.py`        | SPICE netlist 파싱 → `Device` / `Netlist` (mos/res/diode) |
+| `netlist_svg/placer.py`        | **배치 규칙** : net 전압 레벨링 + 컬럼 할당 |
+| `netlist_svg/symbols.py`       | 심볼 라이브러리(SVG): mosfet / resistor / diode |
+| `netlist_svg/renderer.py`      | 배치 결과 → 와이어 라우팅 + SVG 출력 |
+| `netlist_svg/html_renderer.py` | SVG + 컴포넌트 라이브러리 패널을 HTML 로 래핑 |
+| `examples/ota_5t.sp`           | 5T OTA 예제 netlist |
 
 ## 배치 규칙 (GUI placement rules)
 
@@ -42,7 +55,9 @@ python -m netlist_svg examples/ota_5t.sp -o examples/ota_5t.svg -t "5T OTA"
 
 ```
 M<name> <drain> <gate> <source> <bulk> <model> [W=.. L=..]
-.model <name> <nmos|pmos>
+R<name> <n1> <n2> <value>
+D<name> <anode> <cathode> <model>
+.model <name> <nmos|pmos|d>
 ```
 
 - `*` 주석, `+` 연속줄 지원

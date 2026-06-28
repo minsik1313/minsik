@@ -1,4 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="610" viewBox="0 0 720 610">
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>5T OTA (R+diode bias)</title>
+<style>
+  body { margin:0; font-family:'DejaVu Sans',sans-serif; color:#222; background:#f5f6f8; }
+  header { background:#1b3a5b; color:#fff; padding:14px 22px; }
+  header h1 { margin:0; font-size:18px; }
+  header .sub { font-size:12px; opacity:.8; margin-top:4px; }
+  .layout { display:flex; gap:18px; padding:18px; align-items:flex-start; }
+  .schematic { background:#fff; border:1px solid #dcdfe4; border-radius:8px;
+               padding:10px; overflow:auto; box-shadow:0 1px 4px rgba(0,0,0,.06); }
+  .panel { width:240px; flex:0 0 240px; background:#fff; border:1px solid #dcdfe4;
+            border-radius:8px; padding:14px; box-shadow:0 1px 4px rgba(0,0,0,.06); }
+  .panel h2 { font-size:13px; text-transform:uppercase; letter-spacing:.5px;
+               color:#1b3a5b; margin:0 0 10px; }
+  .lib-item { display:flex; gap:10px; align-items:center; padding:8px 0;
+               border-bottom:1px solid #eef0f3; }
+  .lib-glyph { flex:0 0 46px; text-align:center; }
+  .lib-name { font-weight:bold; font-size:13px; }
+  .lib-count { color:#2e7d32; font-weight:normal; }
+  .lib-insts { font-size:11px; color:#666; margin-top:2px; }
+  .nets { font-size:11px; color:#666; margin-top:12px; line-height:1.5; }
+</style>
+</head>
+<body>
+<header>
+  <h1>5T OTA (R+diode bias)</h1>
+  <div class="sub">netlist → SVG/HTML schematic · auto-placement</div>
+</header>
+<div class="layout">
+  <div class="schematic"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="610" viewBox="0 0 720 610">
 <style>
   .dev   { stroke:#1b3a5b; stroke-width:2.2; fill:none; }
   .devfill { fill:#1b3a5b; stroke:none; }
@@ -120,3 +152,63 @@
   <circle cx="524.0" cy="204.0" r="3.2" class="dot"/>
   <circle cx="160.0" cy="204.0" r="3.2" class="dot"/>
 </svg>
+</div>
+  <aside class="panel">
+    <h2>Component Library</h2>
+    <div class="lib-item"><div class="lib-glyph"><svg width="46" height="66" viewBox="-6 -4 76 100"><style>
+  .dev   { stroke:#1b3a5b; stroke-width:2.2; fill:none; }
+  .devfill { fill:#1b3a5b; stroke:none; }
+  polygon.dev { fill:#1b3a5b; stroke:none; }
+  .wire  { stroke:#2e7d32; stroke-width:2; fill:none; }
+  .rail  { stroke:#b71c1c; stroke-width:3; fill:none; }
+  .dot   { fill:#2e7d32; }
+  .lbl   { font-family:'DejaVu Sans',sans-serif; font-size:13px; fill:#222; }
+  .devlbl{ font-family:'DejaVu Sans',sans-serif; font-size:13px; fill:#1b3a5b; font-weight:bold; }
+  .vallbl{ font-family:'DejaVu Sans',sans-serif; font-size:11px; fill:#555; }
+  .raillbl{ font-family:'DejaVu Sans',sans-serif; font-size:14px; fill:#b71c1c; font-weight:bold; }
+  .port  { fill:#fff; stroke:#2e7d32; stroke-width:2; }
+</style><line x1="0.0" y1="46.0" x2="22.0" y2="46.0" class="dev"/><line x1="22.0" y1="26.0" x2="22.0" y2="66.0" class="dev"/><line x1="30.0" y1="24.0" x2="30.0" y2="68.0" class="dev"/><line x1="30.0" y1="30.0" x2="46.0" y2="30.0" class="dev"/><line x1="46.0" y1="30.0" x2="46.0" y2="0.0" class="dev"/><line x1="30.0" y1="62.0" x2="46.0" y2="62.0" class="dev"/><line x1="46.0" y1="62.0" x2="46.0" y2="92.0" class="dev"/><polygon points="41.5,62.0 34.5,59.0 34.5,65.0" class="dev"/></svg></div><div class="lib-meta"><div class="lib-name">NMOS <span class="lib-count">×3</span></div><div class="lib-insts">M1, M2, M5</div></div></div>
+<div class="lib-item"><div class="lib-glyph"><svg width="46" height="66" viewBox="-6 -4 76 100"><style>
+  .dev   { stroke:#1b3a5b; stroke-width:2.2; fill:none; }
+  .devfill { fill:#1b3a5b; stroke:none; }
+  polygon.dev { fill:#1b3a5b; stroke:none; }
+  .wire  { stroke:#2e7d32; stroke-width:2; fill:none; }
+  .rail  { stroke:#b71c1c; stroke-width:3; fill:none; }
+  .dot   { fill:#2e7d32; }
+  .lbl   { font-family:'DejaVu Sans',sans-serif; font-size:13px; fill:#222; }
+  .devlbl{ font-family:'DejaVu Sans',sans-serif; font-size:13px; fill:#1b3a5b; font-weight:bold; }
+  .vallbl{ font-family:'DejaVu Sans',sans-serif; font-size:11px; fill:#555; }
+  .raillbl{ font-family:'DejaVu Sans',sans-serif; font-size:14px; fill:#b71c1c; font-weight:bold; }
+  .port  { fill:#fff; stroke:#2e7d32; stroke-width:2; }
+</style><line x1="0.0" y1="46.0" x2="22.0" y2="46.0" class="dev"/><line x1="22.0" y1="26.0" x2="22.0" y2="66.0" class="dev"/><line x1="30.0" y1="24.0" x2="30.0" y2="68.0" class="dev"/><line x1="30.0" y1="30.0" x2="46.0" y2="30.0" class="dev"/><line x1="46.0" y1="30.0" x2="46.0" y2="0.0" class="dev"/><line x1="30.0" y1="62.0" x2="46.0" y2="62.0" class="dev"/><line x1="46.0" y1="62.0" x2="46.0" y2="92.0" class="dev"/><polygon points="34.5,30.0 41.5,27.0 41.5,33.0" class="dev"/></svg></div><div class="lib-meta"><div class="lib-name">PMOS <span class="lib-count">×2</span></div><div class="lib-insts">M3, M4</div></div></div>
+<div class="lib-item"><div class="lib-glyph"><svg width="46" height="66" viewBox="-6 -4 76 100"><style>
+  .dev   { stroke:#1b3a5b; stroke-width:2.2; fill:none; }
+  .devfill { fill:#1b3a5b; stroke:none; }
+  polygon.dev { fill:#1b3a5b; stroke:none; }
+  .wire  { stroke:#2e7d32; stroke-width:2; fill:none; }
+  .rail  { stroke:#b71c1c; stroke-width:3; fill:none; }
+  .dot   { fill:#2e7d32; }
+  .lbl   { font-family:'DejaVu Sans',sans-serif; font-size:13px; fill:#222; }
+  .devlbl{ font-family:'DejaVu Sans',sans-serif; font-size:13px; fill:#1b3a5b; font-weight:bold; }
+  .vallbl{ font-family:'DejaVu Sans',sans-serif; font-size:11px; fill:#555; }
+  .raillbl{ font-family:'DejaVu Sans',sans-serif; font-size:14px; fill:#b71c1c; font-weight:bold; }
+  .port  { fill:#fff; stroke:#2e7d32; stroke-width:2; }
+</style><line x1="32.0" y1="0.0" x2="32.0" y2="26.0" class="dev"/><rect x="24.0" y="26.0" width="16.0" height="40.0" rx="2" class="dev"/><line x1="32.0" y1="66.0" x2="32.0" y2="92.0" class="dev"/></svg></div><div class="lib-meta"><div class="lib-name">Resistor <span class="lib-count">×1</span></div><div class="lib-insts">R1</div></div></div>
+<div class="lib-item"><div class="lib-glyph"><svg width="46" height="66" viewBox="-6 -4 76 100"><style>
+  .dev   { stroke:#1b3a5b; stroke-width:2.2; fill:none; }
+  .devfill { fill:#1b3a5b; stroke:none; }
+  polygon.dev { fill:#1b3a5b; stroke:none; }
+  .wire  { stroke:#2e7d32; stroke-width:2; fill:none; }
+  .rail  { stroke:#b71c1c; stroke-width:3; fill:none; }
+  .dot   { fill:#2e7d32; }
+  .lbl   { font-family:'DejaVu Sans',sans-serif; font-size:13px; fill:#222; }
+  .devlbl{ font-family:'DejaVu Sans',sans-serif; font-size:13px; fill:#1b3a5b; font-weight:bold; }
+  .vallbl{ font-family:'DejaVu Sans',sans-serif; font-size:11px; fill:#555; }
+  .raillbl{ font-family:'DejaVu Sans',sans-serif; font-size:14px; fill:#b71c1c; font-weight:bold; }
+  .port  { fill:#fff; stroke:#2e7d32; stroke-width:2; }
+</style><line x1="32.0" y1="0.0" x2="32.0" y2="30.0" class="dev"/><polygon points="23.0,30.0 41.0,30.0 32.0,58.0" class="devfill"/><line x1="23.0" y1="58.0" x2="41.0" y2="58.0" class="dev"/><line x1="32.0" y1="58.0" x2="32.0" y2="92.0" class="dev"/></svg></div><div class="lib-meta"><div class="lib-name">Diode <span class="lib-count">×1</span></div><div class="lib-insts">D1</div></div></div>
+    <div class="nets"><b>Nets:</b> INN, INP, OUTM, OUTP, TAIL, VBIAS, VDD, VSS</div>
+  </aside>
+</div>
+</body>
+</html>

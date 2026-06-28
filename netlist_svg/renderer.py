@@ -1,52 +1,67 @@
-"""Render a Placement into an SVG schematic."""
+"""Render a Placement into an SVG schematic (and an HTML page wrapper)."""
 
 from __future__ import annotations
 
+from collections import defaultdict
+
 from . import symbols
 from .placer import classify_net
-from .symbols import BOX_H, BOX_W
+from .symbols import BOX_H
 
-# layout constants
 MARGIN_TOP = 80
 MARGIN_BOTTOM = 80
-MARGIN_LEFT = 150
-MARGIN_RIGHT = 150
+MARGIN_LEFT = 160
+MARGIN_RIGHT = 160
 LEVEL_H = 150
-COL_W = 220
+COL_W = 200
 PORT_LEN = 60
 
 _STYLE = """
   .dev   { stroke:#1b3a5b; stroke-width:2.2; fill:none; }
+  .devfill { fill:#1b3a5b; stroke:none; }
   polygon.dev { fill:#1b3a5b; stroke:none; }
   .wire  { stroke:#2e7d32; stroke-width:2; fill:none; }
   .rail  { stroke:#b71c1c; stroke-width:3; fill:none; }
   .dot   { fill:#2e7d32; }
   .lbl   { font-family:'DejaVu Sans',sans-serif; font-size:13px; fill:#222; }
   .devlbl{ font-family:'DejaVu Sans',sans-serif; font-size:13px; fill:#1b3a5b; font-weight:bold; }
+  .vallbl{ font-family:'DejaVu Sans',sans-serif; font-size:11px; fill:#555; }
   .raillbl{ font-family:'DejaVu Sans',sans-serif; font-size:14px; fill:#b71c1c; font-weight:bold; }
   .port  { fill:#fff; stroke:#2e7d32; stroke-width:2; }
 """
 
 
-def _net_y(level: int) -> float:
+def _net_y(level):
     return MARGIN_TOP + level * LEVEL_H
 
 
-def _x_center(col: float) -> float:
+def _x_center(col):
     return MARGIN_LEFT + col * COL_W
 
 
-def render(placement, netlist, title="schematic") -> str:
+def _is_port(netlist, net):
+    """Signal net that only appears on gates (never a power terminal)."""
+    for d in netlist.devices:
+        if net in d.power_terminals():
+            return False
+    return True
+
+
+def _draw_symbol(d, ox, oy, flip, source_side):
+    if d.kind == "mos":
+        return symbols.mosfet(ox, oy, d.mtype, source_side, flip)
+    if d.kind == "res":
+        return symbols.resistor(ox, oy, flip)
+    if d.kind == "diode":
+        return symbols.diode(ox, oy, flip)
+    raise ValueError(d.kind)
+
+
+def render_svg(placement, netlist, title="schematic"):
     elems = []
-    pin_points = {}   # net -> list of (x, y) connection points on its trunk
+    pin_points = defaultdict(list)
 
-    def add_pin(net, pt):
-        pin_points.setdefault(net, []).append(pt)
-
-    # Give each net a horizontal "track" y.  Power rails stay flat; signal nets
-    # that land on the same level are fanned out vertically so two different
-    # nets never share one collinear wire (which would read as a short).
-    from collections import defaultdict
+    # horizontal track per net (rails flat; same-level signal nets fanned out)
     level_nets = defaultdict(list)
     track_y = {}
     for net in netlist.nets:
@@ -60,64 +75,60 @@ def render(placement, netlist, title="schematic") -> str:
         for i, net in enumerate(nets_sorted):
             track_y[net] = _net_y(lvl) + (i - (k - 1) / 2) * 26
 
-    # ---- place devices ----
+    # ---- devices ----
     for pd in placement.devices:
         d = pd.device
-        ld, ls = placement.net_level[d.drain], placement.net_level[d.source]
-        top_net = d.drain if ld <= ls else d.source
-        bot_net = d.source if ld <= ls else d.drain
-        source_side = "B" if d.mtype == "nmos" else "T"
+        p0, p1 = d.power_terminals()
+        l0, l1 = placement.net_level[p0], placement.net_level[p1]
+        top_net = p0 if l0 <= l1 else p1
+        bot_net = p1 if l0 <= l1 else p0
+        source_side = "T" if (d.kind == "mos" and d.mtype == "pmos") else "B"
 
-        # vertical placement: body centered between the two net levels
-        top_y = _net_y(min(ld, ls))
         x_center = _x_center(pd.col)
-        # align the drain/source terminal column to x_center
-        term_local = symbols.BOX_W - symbols._TERM_X if pd.flip else symbols._TERM_X
+        term_local = symbols.mos_term_local_x(flip=pd.flip) if d.kind == "mos" else symbols.CENTER_X
         ox = x_center - term_local
-        oy = top_y + (LEVEL_H - BOX_H) / 2
+        oy = _net_y(min(l0, l1)) + (LEVEL_H - BOX_H) / 2
 
-        svg, term = symbols.mosfet(ox, oy, d.mtype, source_side, pd.flip)
+        svg, term = _draw_symbol(d, ox, oy, pd.flip, source_side)
         elems.extend(svg)
 
-        # device label
-        elems.append(
-            f'<text class="devlbl" x="{term["G"][0] + (-6 if not pd.flip else 6):.1f}" '
-            f'y="{oy + 18:.1f}" text-anchor="{"end" if not pd.flip else "start"}">'
-            f'{d.name}</text>'
-        )
-
-        # connect terminals to their net trunks (vertical leads)
+        # power-terminal leads
         tx, ty = term["T"]
         bx, by = term["B"]
-        ty_net = track_y[top_net]
-        by_net = track_y[bot_net]
-        elems.append(f'<line x1="{tx:.1f}" y1="{ty:.1f}" x2="{tx:.1f}" y2="{ty_net:.1f}" class="wire"/>')
-        elems.append(f'<line x1="{bx:.1f}" y1="{by:.1f}" x2="{bx:.1f}" y2="{by_net:.1f}" class="wire"/>')
-        add_pin(top_net, (tx, ty_net))
-        add_pin(bot_net, (bx, by_net))
+        elems.append(f'<line x1="{tx:.1f}" y1="{ty:.1f}" x2="{tx:.1f}" y2="{track_y[top_net]:.1f}" class="wire"/>')
+        elems.append(f'<line x1="{bx:.1f}" y1="{by:.1f}" x2="{bx:.1f}" y2="{track_y[bot_net]:.1f}" class="wire"/>')
+        pin_points[top_net].append((tx, track_y[top_net]))
+        pin_points[bot_net].append((bx, track_y[bot_net]))
 
-        # gate
-        gx, gy = term["G"]
-        gate_net = d.gate
-        if classify_net(gate_net) == "signal" and _is_port(netlist, gate_net):
-            # external input port
-            direction = -1 if not pd.flip else 1
-            px = gx + direction * PORT_LEN
-            elems.append(f'<line x1="{gx:.1f}" y1="{gy:.1f}" x2="{px:.1f}" y2="{gy:.1f}" class="wire"/>')
-            elems.append(f'<circle cx="{px:.1f}" cy="{gy:.1f}" r="4" class="port"/>')
-            anchor = "end" if direction < 0 else "start"
-            lx = px + direction * 8
-            elems.append(f'<text class="lbl" x="{lx:.1f}" y="{gy - 8:.1f}" text-anchor="{anchor}">{gate_net}</text>')
+        # labels
+        if d.kind == "mos":
+            anchor = "end" if not pd.flip else "start"
+            lx = term["G"][0] + (-6 if not pd.flip else 6)
+            elems.append(f'<text class="devlbl" x="{lx:.1f}" y="{oy + 18:.1f}" text-anchor="{anchor}">{d.name}</text>')
         else:
-            # gate joins an internal net trunk: stub out then drop to trunk
-            direction = -1 if not pd.flip else 1
-            stub_x = gx + direction * 18
-            trunk_y = track_y[gate_net]
-            elems.append(f'<line x1="{gx:.1f}" y1="{gy:.1f}" x2="{stub_x:.1f}" y2="{gy:.1f}" class="wire"/>')
-            elems.append(f'<line x1="{stub_x:.1f}" y1="{gy:.1f}" x2="{stub_x:.1f}" y2="{trunk_y:.1f}" class="wire"/>')
-            add_pin(gate_net, (stub_x, trunk_y))
+            elems.append(f'<text class="devlbl" x="{x_center + 14:.1f}" y="{oy + 40:.1f}" text-anchor="start">{d.name}</text>')
+            extra = d.value or d.model
+            if extra:
+                elems.append(f'<text class="vallbl" x="{x_center + 14:.1f}" y="{oy + 56:.1f}" text-anchor="start">{extra}</text>')
 
-    # ---- draw net trunks & rails ----
+        # gate (mos only)
+        if d.kind == "mos":
+            gx, gy = term["G"]
+            gnet = d.gate
+            direction = -1 if not pd.flip else 1
+            if classify_net(gnet) == "signal" and _is_port(netlist, gnet):
+                px = gx + direction * PORT_LEN
+                elems.append(f'<line x1="{gx:.1f}" y1="{gy:.1f}" x2="{px:.1f}" y2="{gy:.1f}" class="wire"/>')
+                elems.append(f'<circle cx="{px:.1f}" cy="{gy:.1f}" r="4" class="port"/>')
+                a = "end" if direction < 0 else "start"
+                elems.append(f'<text class="lbl" x="{px + direction * 8:.1f}" y="{gy - 8:.1f}" text-anchor="{a}">{gnet}</text>')
+            else:
+                stub_x = gx + direction * 18
+                elems.append(f'<line x1="{gx:.1f}" y1="{gy:.1f}" x2="{stub_x:.1f}" y2="{gy:.1f}" class="wire"/>')
+                elems.append(f'<line x1="{stub_x:.1f}" y1="{gy:.1f}" x2="{stub_x:.1f}" y2="{track_y[gnet]:.1f}" class="wire"/>')
+                pin_points[gnet].append((stub_x, track_y[gnet]))
+
+    # ---- net trunks & rails ----
     width = MARGIN_LEFT + (placement.n_cols - 1) * COL_W + MARGIN_RIGHT
     for net, pts in pin_points.items():
         if not pts:
@@ -126,25 +137,19 @@ def render(placement, netlist, title="schematic") -> str:
         ys = track_y[net]
         xs = [p[0] for p in pts]
         x0, x1 = min(xs), max(xs)
-        if cls == "vdd":
-            x0, x1 = MARGIN_LEFT - 100, width - MARGIN_RIGHT + 100
+        if cls in ("vdd", "gnd"):
+            x0, x1 = MARGIN_LEFT - 110, width - MARGIN_RIGHT + 110
             elems.insert(0, f'<line x1="{x0:.1f}" y1="{ys:.1f}" x2="{x1:.1f}" y2="{ys:.1f}" class="rail"/>')
-            elems.append(f'<text class="raillbl" x="{x0:.1f}" y="{ys - 8:.1f}">{net}</text>')
-        elif cls == "gnd":
-            x0, x1 = MARGIN_LEFT - 100, width - MARGIN_RIGHT + 100
-            elems.insert(0, f'<line x1="{x0:.1f}" y1="{ys:.1f}" x2="{x1:.1f}" y2="{ys:.1f}" class="rail"/>')
-            elems.append(f'<text class="raillbl" x="{x0:.1f}" y="{ys + 18:.1f}">{net}</text>')
+            dy = -8 if cls == "vdd" else 18
+            elems.append(f'<text class="raillbl" x="{x0:.1f}" y="{ys + dy:.1f}">{net}</text>')
         else:
             elems.insert(0, f'<line x1="{x0:.1f}" y1="{ys:.1f}" x2="{x1:.1f}" y2="{ys:.1f}" class="wire"/>')
-            # net name label near the trunk
             elems.append(f'<text class="lbl" x="{(x0 + x1) / 2:.1f}" y="{ys - 7:.1f}" text-anchor="middle">{net}</text>')
-        # junction dots when 3+ pins meet
         if len(pts) >= 3:
-            for (px, _py) in pts:
+            for (px, _py) in dict.fromkeys(pts):   # dedupe coincident pins
                 elems.append(f'<circle cx="{px:.1f}" cy="{ys:.1f}" r="3.2" class="dot"/>')
 
     height = MARGIN_TOP + placement.max_level * LEVEL_H + MARGIN_BOTTOM
-
     body = "\n  ".join(elems)
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width:.0f}" height="{height:.0f}" '
@@ -156,9 +161,6 @@ def render(placement, netlist, title="schematic") -> str:
     )
 
 
-def _is_port(netlist, net) -> bool:
-    """A signal net that only ever appears on gates is an external port."""
-    for d in netlist.devices:
-        if net in (d.drain, d.source):
-            return False
-    return True
+# Backwards-compatible name.
+def render(placement, netlist, title="schematic"):
+    return render_svg(placement, netlist, title=title)
