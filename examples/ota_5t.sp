@@ -7,7 +7,6 @@
 *
 * MOSFET : M<name> <drain> <gate> <source> <bulk> <model> [params]
 * RES    : R<name> <n1> <n2> <value>
-* DIODE  : D<name> <anode> <cathode> <model>
 * ============================================================
 
 * --- input differential pair (NMOS) ---
@@ -21,14 +20,14 @@ M4  OUTP  OUTM  VDD   VDD  pmos  W=8u  L=0.5u
 * --- tail current source (NMOS), biased by VBIAS ---
 M5  TAIL  VBIAS VSS   VSS  nmos  W=8u  L=0.5u
 
-* --- bias branch: resistor + diode set VBIAS ---
-R1  VDD   VBIAS 50k
-D1  VBIAS VSS   diode
+* --- bias branch: resistor + diode-connected NMOS set VBIAS ---
+*     MB1 is diode-connected (gate tied to drain); mirrors into M5
+R1   VDD   VBIAS  50k
+MB1  VBIAS VBIAS  VSS   VSS  nmos  W=8u  L=0.5u
 
 * --- device models ---
 .model nmos  nmos
 .model pmos  pmos
-.model diode d
 
 * --- supplies ---
 .global VDD VSS

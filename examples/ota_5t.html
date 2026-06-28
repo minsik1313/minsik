@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>5T OTA (R+diode bias)</title>
+<title>5T OTA (NMOS diode-connected bias)</title>
 <style>
   body { margin:0; font-family:'DejaVu Sans',sans-serif; color:#222; background:#f5f6f8; }
   header { background:#1b3a5b; color:#fff; padding:14px 22px; }
@@ -26,7 +26,7 @@
 </head>
 <body>
 <header>
-  <h1>5T OTA (R+diode bias)</h1>
+  <h1>5T OTA (NMOS diode-connected bias)</h1>
   <div class="sub">netlist → SVG/HTML schematic · auto-placement</div>
 </header>
 <div class="layout">
@@ -45,13 +45,27 @@
   .port  { fill:#fff; stroke:#2e7d32; stroke-width:2; }
 </style>
 <rect width="720" height="610" fill="#ffffff"/>
-<text class="lbl" x="10" y="22" font-size="16">5T OTA (R+diode bias)</text>
-  <line x1="160.0" y1="204.0" x2="524.0" y2="204.0" class="wire"/>
+<text class="lbl" x="10" y="22" font-size="16">5T OTA (NMOS diode-connected bias)</text>
+  <line x1="196.0" y1="256.0" x2="624.0" y2="256.0" class="wire"/>
   <line x1="50.0" y1="530.0" x2="670.0" y2="530.0" class="rail"/>
   <line x1="50.0" y1="80.0" x2="670.0" y2="80.0" class="rail"/>
-  <line x1="560.0" y1="256.0" x2="560.0" y2="256.0" class="wire"/>
-  <line x1="360.0" y1="380.0" x2="560.0" y2="380.0" class="wire"/>
-  <line x1="296.0" y1="230.0" x2="624.0" y2="230.0" class="wire"/>
+  <line x1="360.0" y1="230.0" x2="360.0" y2="230.0" class="wire"/>
+  <line x1="160.0" y1="380.0" x2="360.0" y2="380.0" class="wire"/>
+  <line x1="96.0" y1="204.0" x2="296.0" y2="204.0" class="wire"/>
+  <line x1="114.0" y1="305.0" x2="136.0" y2="305.0" class="dev"/>
+  <line x1="136.0" y1="285.0" x2="136.0" y2="325.0" class="dev"/>
+  <line x1="144.0" y1="283.0" x2="144.0" y2="327.0" class="dev"/>
+  <line x1="144.0" y1="289.0" x2="160.0" y2="289.0" class="dev"/>
+  <line x1="160.0" y1="289.0" x2="160.0" y2="259.0" class="dev"/>
+  <line x1="144.0" y1="321.0" x2="160.0" y2="321.0" class="dev"/>
+  <line x1="160.0" y1="321.0" x2="160.0" y2="351.0" class="dev"/>
+  <polygon points="155.5,321.0 148.5,318.0 148.5,324.0" class="dev"/>
+  <line x1="160.0" y1="259.0" x2="160.0" y2="204.0" class="wire"/>
+  <line x1="160.0" y1="351.0" x2="160.0" y2="380.0" class="wire"/>
+  <text class="devlbl" x="108.0" y="277.0" text-anchor="end">M1</text>
+  <line x1="114.0" y1="305.0" x2="54.0" y2="305.0" class="wire"/>
+  <circle cx="54.0" cy="305.0" r="4" class="port"/>
+  <text class="lbl" x="46.0" y="297.0" text-anchor="end">INP</text>
   <line x1="314.0" y1="305.0" x2="336.0" y2="305.0" class="dev"/>
   <line x1="336.0" y1="285.0" x2="336.0" y2="325.0" class="dev"/>
   <line x1="344.0" y1="283.0" x2="344.0" y2="327.0" class="dev"/>
@@ -62,24 +76,23 @@
   <polygon points="355.5,321.0 348.5,318.0 348.5,324.0" class="dev"/>
   <line x1="360.0" y1="259.0" x2="360.0" y2="230.0" class="wire"/>
   <line x1="360.0" y1="351.0" x2="360.0" y2="380.0" class="wire"/>
-  <text class="devlbl" x="308.0" y="277.0" text-anchor="end">M1</text>
+  <text class="devlbl" x="308.0" y="277.0" text-anchor="end">M2</text>
   <line x1="314.0" y1="305.0" x2="254.0" y2="305.0" class="wire"/>
   <circle cx="254.0" cy="305.0" r="4" class="port"/>
-  <text class="lbl" x="246.0" y="297.0" text-anchor="end">INP</text>
-  <line x1="606.0" y1="305.0" x2="584.0" y2="305.0" class="dev"/>
-  <line x1="584.0" y1="285.0" x2="584.0" y2="325.0" class="dev"/>
-  <line x1="576.0" y1="283.0" x2="576.0" y2="327.0" class="dev"/>
-  <line x1="576.0" y1="289.0" x2="560.0" y2="289.0" class="dev"/>
-  <line x1="560.0" y1="289.0" x2="560.0" y2="259.0" class="dev"/>
-  <line x1="576.0" y1="321.0" x2="560.0" y2="321.0" class="dev"/>
-  <line x1="560.0" y1="321.0" x2="560.0" y2="351.0" class="dev"/>
-  <polygon points="564.5,321.0 571.5,318.0 571.5,324.0" class="dev"/>
-  <line x1="560.0" y1="259.0" x2="560.0" y2="256.0" class="wire"/>
-  <line x1="560.0" y1="351.0" x2="560.0" y2="380.0" class="wire"/>
-  <text class="devlbl" x="612.0" y="277.0" text-anchor="start">M2</text>
-  <line x1="606.0" y1="305.0" x2="666.0" y2="305.0" class="wire"/>
-  <circle cx="666.0" cy="305.0" r="4" class="port"/>
-  <text class="lbl" x="674.0" y="297.0" text-anchor="start">INN</text>
+  <text class="lbl" x="246.0" y="297.0" text-anchor="end">INN</text>
+  <line x1="114.0" y1="155.0" x2="136.0" y2="155.0" class="dev"/>
+  <line x1="136.0" y1="135.0" x2="136.0" y2="175.0" class="dev"/>
+  <line x1="144.0" y1="133.0" x2="144.0" y2="177.0" class="dev"/>
+  <line x1="144.0" y1="139.0" x2="160.0" y2="139.0" class="dev"/>
+  <line x1="160.0" y1="139.0" x2="160.0" y2="109.0" class="dev"/>
+  <line x1="144.0" y1="171.0" x2="160.0" y2="171.0" class="dev"/>
+  <line x1="160.0" y1="171.0" x2="160.0" y2="201.0" class="dev"/>
+  <polygon points="148.5,139.0 155.5,136.0 155.5,142.0" class="dev"/>
+  <line x1="160.0" y1="109.0" x2="160.0" y2="80.0" class="wire"/>
+  <line x1="160.0" y1="201.0" x2="160.0" y2="204.0" class="wire"/>
+  <text class="devlbl" x="108.0" y="127.0" text-anchor="end">M3</text>
+  <line x1="114.0" y1="155.0" x2="96.0" y2="155.0" class="wire"/>
+  <line x1="96.0" y1="155.0" x2="96.0" y2="204.0" class="wire"/>
   <line x1="314.0" y1="155.0" x2="336.0" y2="155.0" class="dev"/>
   <line x1="336.0" y1="135.0" x2="336.0" y2="175.0" class="dev"/>
   <line x1="344.0" y1="133.0" x2="344.0" y2="177.0" class="dev"/>
@@ -90,67 +103,60 @@
   <polygon points="348.5,139.0 355.5,136.0 355.5,142.0" class="dev"/>
   <line x1="360.0" y1="109.0" x2="360.0" y2="80.0" class="wire"/>
   <line x1="360.0" y1="201.0" x2="360.0" y2="230.0" class="wire"/>
-  <text class="devlbl" x="308.0" y="127.0" text-anchor="end">M3</text>
+  <text class="devlbl" x="308.0" y="127.0" text-anchor="end">M4</text>
   <line x1="314.0" y1="155.0" x2="296.0" y2="155.0" class="wire"/>
-  <line x1="296.0" y1="155.0" x2="296.0" y2="230.0" class="wire"/>
-  <line x1="606.0" y1="155.0" x2="584.0" y2="155.0" class="dev"/>
-  <line x1="584.0" y1="135.0" x2="584.0" y2="175.0" class="dev"/>
-  <line x1="576.0" y1="133.0" x2="576.0" y2="177.0" class="dev"/>
-  <line x1="576.0" y1="139.0" x2="560.0" y2="139.0" class="dev"/>
-  <line x1="560.0" y1="139.0" x2="560.0" y2="109.0" class="dev"/>
-  <line x1="576.0" y1="171.0" x2="560.0" y2="171.0" class="dev"/>
-  <line x1="560.0" y1="171.0" x2="560.0" y2="201.0" class="dev"/>
-  <polygon points="571.5,139.0 564.5,136.0 564.5,142.0" class="dev"/>
+  <line x1="296.0" y1="155.0" x2="296.0" y2="204.0" class="wire"/>
+  <line x1="214.0" y1="455.0" x2="236.0" y2="455.0" class="dev"/>
+  <line x1="236.0" y1="435.0" x2="236.0" y2="475.0" class="dev"/>
+  <line x1="244.0" y1="433.0" x2="244.0" y2="477.0" class="dev"/>
+  <line x1="244.0" y1="439.0" x2="260.0" y2="439.0" class="dev"/>
+  <line x1="260.0" y1="439.0" x2="260.0" y2="409.0" class="dev"/>
+  <line x1="244.0" y1="471.0" x2="260.0" y2="471.0" class="dev"/>
+  <line x1="260.0" y1="471.0" x2="260.0" y2="501.0" class="dev"/>
+  <polygon points="255.5,471.0 248.5,468.0 248.5,474.0" class="dev"/>
+  <line x1="260.0" y1="409.0" x2="260.0" y2="380.0" class="wire"/>
+  <line x1="260.0" y1="501.0" x2="260.0" y2="530.0" class="wire"/>
+  <text class="devlbl" x="208.0" y="427.0" text-anchor="end">M5</text>
+  <line x1="214.0" y1="455.0" x2="196.0" y2="455.0" class="wire"/>
+  <line x1="196.0" y1="455.0" x2="196.0" y2="256.0" class="wire"/>
+  <line x1="560.0" y1="109.0" x2="560.0" y2="135.0" class="dev"/>
+  <rect x="552.0" y="135.0" width="16.0" height="40.0" rx="2" class="dev"/>
+  <line x1="560.0" y1="175.0" x2="560.0" y2="201.0" class="dev"/>
   <line x1="560.0" y1="109.0" x2="560.0" y2="80.0" class="wire"/>
   <line x1="560.0" y1="201.0" x2="560.0" y2="256.0" class="wire"/>
-  <text class="devlbl" x="612.0" y="127.0" text-anchor="start">M4</text>
-  <line x1="606.0" y1="155.0" x2="624.0" y2="155.0" class="wire"/>
-  <line x1="624.0" y1="155.0" x2="624.0" y2="230.0" class="wire"/>
-  <line x1="506.0" y1="455.0" x2="484.0" y2="455.0" class="dev"/>
-  <line x1="484.0" y1="435.0" x2="484.0" y2="475.0" class="dev"/>
-  <line x1="476.0" y1="433.0" x2="476.0" y2="477.0" class="dev"/>
-  <line x1="476.0" y1="439.0" x2="460.0" y2="439.0" class="dev"/>
-  <line x1="460.0" y1="439.0" x2="460.0" y2="409.0" class="dev"/>
-  <line x1="476.0" y1="471.0" x2="460.0" y2="471.0" class="dev"/>
-  <line x1="460.0" y1="471.0" x2="460.0" y2="501.0" class="dev"/>
-  <polygon points="464.5,471.0 471.5,468.0 471.5,474.0" class="dev"/>
-  <line x1="460.0" y1="409.0" x2="460.0" y2="380.0" class="wire"/>
-  <line x1="460.0" y1="501.0" x2="460.0" y2="530.0" class="wire"/>
-  <text class="devlbl" x="512.0" y="427.0" text-anchor="start">M5</text>
-  <line x1="506.0" y1="455.0" x2="524.0" y2="455.0" class="wire"/>
-  <line x1="524.0" y1="455.0" x2="524.0" y2="204.0" class="wire"/>
-  <line x1="160.0" y1="109.0" x2="160.0" y2="135.0" class="dev"/>
-  <rect x="152.0" y="135.0" width="16.0" height="40.0" rx="2" class="dev"/>
-  <line x1="160.0" y1="175.0" x2="160.0" y2="201.0" class="dev"/>
-  <line x1="160.0" y1="109.0" x2="160.0" y2="80.0" class="wire"/>
-  <line x1="160.0" y1="201.0" x2="160.0" y2="204.0" class="wire"/>
-  <text class="devlbl" x="174.0" y="149.0" text-anchor="start">R1</text>
-  <text class="vallbl" x="174.0" y="165.0" text-anchor="start">50k</text>
-  <line x1="160.0" y1="259.0" x2="160.0" y2="289.0" class="dev"/>
-  <polygon points="151.0,289.0 169.0,289.0 160.0,317.0" class="devfill"/>
-  <line x1="151.0" y1="317.0" x2="169.0" y2="317.0" class="dev"/>
-  <line x1="160.0" y1="317.0" x2="160.0" y2="351.0" class="dev"/>
-  <line x1="160.0" y1="259.0" x2="160.0" y2="204.0" class="wire"/>
-  <line x1="160.0" y1="351.0" x2="160.0" y2="530.0" class="wire"/>
-  <text class="devlbl" x="174.0" y="299.0" text-anchor="start">D1</text>
-  <text class="vallbl" x="174.0" y="315.0" text-anchor="start">diode</text>
-  <text class="lbl" x="460.0" y="223.0" text-anchor="middle">OUTM</text>
-  <circle cx="360.0" cy="230.0" r="3.2" class="dot"/>
-  <circle cx="296.0" cy="230.0" r="3.2" class="dot"/>
-  <circle cx="624.0" cy="230.0" r="3.2" class="dot"/>
-  <text class="lbl" x="460.0" y="373.0" text-anchor="middle">TAIL</text>
+  <text class="devlbl" x="574.0" y="149.0" text-anchor="start">R1</text>
+  <text class="vallbl" x="574.0" y="165.0" text-anchor="start">50k</text>
+  <line x1="606.0" y1="305.0" x2="584.0" y2="305.0" class="dev"/>
+  <line x1="584.0" y1="285.0" x2="584.0" y2="325.0" class="dev"/>
+  <line x1="576.0" y1="283.0" x2="576.0" y2="327.0" class="dev"/>
+  <line x1="576.0" y1="289.0" x2="560.0" y2="289.0" class="dev"/>
+  <line x1="560.0" y1="289.0" x2="560.0" y2="259.0" class="dev"/>
+  <line x1="576.0" y1="321.0" x2="560.0" y2="321.0" class="dev"/>
+  <line x1="560.0" y1="321.0" x2="560.0" y2="351.0" class="dev"/>
+  <polygon points="564.5,321.0 571.5,318.0 571.5,324.0" class="dev"/>
+  <line x1="560.0" y1="259.0" x2="560.0" y2="256.0" class="wire"/>
+  <line x1="560.0" y1="351.0" x2="560.0" y2="530.0" class="wire"/>
+  <text class="devlbl" x="612.0" y="277.0" text-anchor="start">MB1</text>
+  <line x1="606.0" y1="305.0" x2="624.0" y2="305.0" class="wire"/>
+  <line x1="624.0" y1="305.0" x2="624.0" y2="256.0" class="wire"/>
+  <text class="lbl" x="196.0" y="197.0" text-anchor="middle">OUTM</text>
+  <circle cx="160.0" cy="204.0" r="3.2" class="dot"/>
+  <circle cx="96.0" cy="204.0" r="3.2" class="dot"/>
+  <circle cx="296.0" cy="204.0" r="3.2" class="dot"/>
+  <text class="lbl" x="260.0" y="373.0" text-anchor="middle">TAIL</text>
+  <circle cx="160.0" cy="380.0" r="3.2" class="dot"/>
   <circle cx="360.0" cy="380.0" r="3.2" class="dot"/>
-  <circle cx="560.0" cy="380.0" r="3.2" class="dot"/>
-  <circle cx="460.0" cy="380.0" r="3.2" class="dot"/>
-  <text class="lbl" x="560.0" y="249.0" text-anchor="middle">OUTP</text>
+  <circle cx="260.0" cy="380.0" r="3.2" class="dot"/>
+  <text class="lbl" x="360.0" y="223.0" text-anchor="middle">OUTP</text>
   <text class="raillbl" x="50.0" y="72.0">VDD</text>
+  <circle cx="160.0" cy="80.0" r="3.2" class="dot"/>
   <circle cx="360.0" cy="80.0" r="3.2" class="dot"/>
   <circle cx="560.0" cy="80.0" r="3.2" class="dot"/>
-  <circle cx="160.0" cy="80.0" r="3.2" class="dot"/>
   <text class="raillbl" x="50.0" y="548.0">VSS</text>
-  <text class="lbl" x="342.0" y="197.0" text-anchor="middle">VBIAS</text>
-  <circle cx="524.0" cy="204.0" r="3.2" class="dot"/>
-  <circle cx="160.0" cy="204.0" r="3.2" class="dot"/>
+  <text class="lbl" x="410.0" y="249.0" text-anchor="middle">VBIAS</text>
+  <circle cx="196.0" cy="256.0" r="3.2" class="dot"/>
+  <circle cx="560.0" cy="256.0" r="3.2" class="dot"/>
+  <circle cx="624.0" cy="256.0" r="3.2" class="dot"/>
 </svg>
 </div>
   <aside class="panel">
@@ -167,7 +173,7 @@
   .vallbl{ font-family:'DejaVu Sans',sans-serif; font-size:11px; fill:#555; }
   .raillbl{ font-family:'DejaVu Sans',sans-serif; font-size:14px; fill:#b71c1c; font-weight:bold; }
   .port  { fill:#fff; stroke:#2e7d32; stroke-width:2; }
-</style><line x1="0.0" y1="46.0" x2="22.0" y2="46.0" class="dev"/><line x1="22.0" y1="26.0" x2="22.0" y2="66.0" class="dev"/><line x1="30.0" y1="24.0" x2="30.0" y2="68.0" class="dev"/><line x1="30.0" y1="30.0" x2="46.0" y2="30.0" class="dev"/><line x1="46.0" y1="30.0" x2="46.0" y2="0.0" class="dev"/><line x1="30.0" y1="62.0" x2="46.0" y2="62.0" class="dev"/><line x1="46.0" y1="62.0" x2="46.0" y2="92.0" class="dev"/><polygon points="41.5,62.0 34.5,59.0 34.5,65.0" class="dev"/></svg></div><div class="lib-meta"><div class="lib-name">NMOS <span class="lib-count">×3</span></div><div class="lib-insts">M1, M2, M5</div></div></div>
+</style><line x1="0.0" y1="46.0" x2="22.0" y2="46.0" class="dev"/><line x1="22.0" y1="26.0" x2="22.0" y2="66.0" class="dev"/><line x1="30.0" y1="24.0" x2="30.0" y2="68.0" class="dev"/><line x1="30.0" y1="30.0" x2="46.0" y2="30.0" class="dev"/><line x1="46.0" y1="30.0" x2="46.0" y2="0.0" class="dev"/><line x1="30.0" y1="62.0" x2="46.0" y2="62.0" class="dev"/><line x1="46.0" y1="62.0" x2="46.0" y2="92.0" class="dev"/><polygon points="41.5,62.0 34.5,59.0 34.5,65.0" class="dev"/></svg></div><div class="lib-meta"><div class="lib-name">NMOS <span class="lib-count">×4</span></div><div class="lib-insts">M1, M2, M5, MB1</div></div></div>
 <div class="lib-item"><div class="lib-glyph"><svg width="46" height="66" viewBox="-6 -4 76 100"><style>
   .dev   { stroke:#1b3a5b; stroke-width:2.2; fill:none; }
   .devfill { fill:#1b3a5b; stroke:none; }
@@ -194,19 +200,6 @@
   .raillbl{ font-family:'DejaVu Sans',sans-serif; font-size:14px; fill:#b71c1c; font-weight:bold; }
   .port  { fill:#fff; stroke:#2e7d32; stroke-width:2; }
 </style><line x1="32.0" y1="0.0" x2="32.0" y2="26.0" class="dev"/><rect x="24.0" y="26.0" width="16.0" height="40.0" rx="2" class="dev"/><line x1="32.0" y1="66.0" x2="32.0" y2="92.0" class="dev"/></svg></div><div class="lib-meta"><div class="lib-name">Resistor <span class="lib-count">×1</span></div><div class="lib-insts">R1</div></div></div>
-<div class="lib-item"><div class="lib-glyph"><svg width="46" height="66" viewBox="-6 -4 76 100"><style>
-  .dev   { stroke:#1b3a5b; stroke-width:2.2; fill:none; }
-  .devfill { fill:#1b3a5b; stroke:none; }
-  polygon.dev { fill:#1b3a5b; stroke:none; }
-  .wire  { stroke:#2e7d32; stroke-width:2; fill:none; }
-  .rail  { stroke:#b71c1c; stroke-width:3; fill:none; }
-  .dot   { fill:#2e7d32; }
-  .lbl   { font-family:'DejaVu Sans',sans-serif; font-size:13px; fill:#222; }
-  .devlbl{ font-family:'DejaVu Sans',sans-serif; font-size:13px; fill:#1b3a5b; font-weight:bold; }
-  .vallbl{ font-family:'DejaVu Sans',sans-serif; font-size:11px; fill:#555; }
-  .raillbl{ font-family:'DejaVu Sans',sans-serif; font-size:14px; fill:#b71c1c; font-weight:bold; }
-  .port  { fill:#fff; stroke:#2e7d32; stroke-width:2; }
-</style><line x1="32.0" y1="0.0" x2="32.0" y2="30.0" class="dev"/><polygon points="23.0,30.0 41.0,30.0 32.0,58.0" class="devfill"/><line x1="23.0" y1="58.0" x2="41.0" y2="58.0" class="dev"/><line x1="32.0" y1="58.0" x2="32.0" y2="92.0" class="dev"/></svg></div><div class="lib-meta"><div class="lib-name">Diode <span class="lib-count">×1</span></div><div class="lib-insts">D1</div></div></div>
     <div class="nets"><b>Nets:</b> INN, INP, OUTM, OUTP, TAIL, VBIAS, VDD, VSS</div>
   </aside>
 </div>

@@ -9,7 +9,6 @@ _GLYPHS = {
     "nmos":     ("NMOS",     lambda: symbols.mosfet(0, 0, "nmos", "B", False)),
     "pmos":     ("PMOS",     lambda: symbols.mosfet(0, 0, "pmos", "T", False)),
     "resistor": ("Resistor", lambda: symbols.resistor(0, 0)),
-    "diode":    ("Diode",    lambda: symbols.diode(0, 0)),
 }
 
 

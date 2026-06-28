@@ -21,7 +21,8 @@ python -m netlist_svg examples/ota_5t.sp -f svg -o examples/ota_5t.svg
 |------|----------------|------|
 | NMOS / PMOS | `M` | ✅ |
 | Resistor    | `R` | ✅ |
-| Diode       | `D` | ✅ |
+
+> 전류원/바이어스는 **diode-connected NMOS** (gate를 drain에 묶은 `M`) 로 구성합니다.
 
 ## 구조
 
@@ -56,9 +57,11 @@ python -m netlist_svg examples/ota_5t.sp -f svg -o examples/ota_5t.svg
 ```
 M<name> <drain> <gate> <source> <bulk> <model> [W=.. L=..]
 R<name> <n1> <n2> <value>
-D<name> <anode> <cathode> <model>
-.model <name> <nmos|pmos|d>
+.model <name> <nmos|pmos>
 ```
+
+diode-connected NMOS 는 그냥 gate 를 drain 에 묶으면 됩니다:
+`MB1 VBIAS VBIAS VSS VSS nmos`
 
 - `*` 주석, `+` 연속줄 지원
 - gate 에만 연결되고 drain/source 에 안 나타나는 신호 net 은 외부 입력 포트로 그림
