@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import html
+
 from . import symbols
 from .renderer import _STYLE, render_svg
 
@@ -47,9 +49,19 @@ def _library_panel(netlist):
     return "\n".join(rows)
 
 
+def _netlist_panel(netlist):
+    lines = []
+    for raw in netlist.source.splitlines():
+        esc = html.escape(raw)
+        cls = "nl-comment" if raw.strip().startswith("*") else "nl-line"
+        lines.append(f'<span class="{cls}">{esc or "&nbsp;"}</span>')
+    return "<pre class=\"nl\">" + "\n".join(lines) + "</pre>"
+
+
 def render_html(placement, netlist, title="schematic"):
     svg = render_svg(placement, netlist, title=title)
     panel = _library_panel(netlist)
+    netlist_src = _netlist_panel(netlist)
     nets = ", ".join(sorted(netlist.nets))
 
     return f"""<!doctype html>
@@ -65,7 +77,7 @@ def render_html(placement, netlist, title="schematic"):
   .layout {{ display:flex; gap:18px; padding:18px; align-items:flex-start; }}
   .schematic {{ background:#fff; border:1px solid #dcdfe4; border-radius:8px;
                padding:10px; overflow:auto; box-shadow:0 1px 4px rgba(0,0,0,.06); }}
-  .panel {{ width:240px; flex:0 0 240px; background:#fff; border:1px solid #dcdfe4;
+  .panel {{ width:330px; flex:0 0 330px; background:#fff; border:1px solid #dcdfe4;
             border-radius:8px; padding:14px; box-shadow:0 1px 4px rgba(0,0,0,.06); }}
   .panel h2 {{ font-size:13px; text-transform:uppercase; letter-spacing:.5px;
                color:#1b3a5b; margin:0 0 10px; }}
@@ -76,6 +88,11 @@ def render_html(placement, netlist, title="schematic"):
   .lib-count {{ color:#2e7d32; font-weight:normal; }}
   .lib-insts {{ font-size:11px; color:#666; margin-top:2px; }}
   .nets {{ font-size:11px; color:#666; margin-top:12px; line-height:1.5; }}
+  .nl {{ margin:0; font-family:'DejaVu Sans Mono',monospace; font-size:11.5px;
+         line-height:1.5; white-space:pre; overflow-x:auto;
+         background:#0f2233; color:#dfe7ef; padding:12px; border-radius:6px; }}
+  .nl-comment {{ color:#6f8aa3; }}
+  .nl-line {{ color:#e8eef4; }}
 </style>
 </head>
 <body>
@@ -86,7 +103,9 @@ def render_html(placement, netlist, title="schematic"):
 <div class="layout">
   <div class="schematic">{svg}</div>
   <aside class="panel">
-    <h2>Component Library</h2>
+    <h2>Netlist</h2>
+    {netlist_src}
+    <h2 style="margin-top:18px">Component Library</h2>
     {panel}
     <div class="nets"><b>Nets:</b> {nets}</div>
   </aside>

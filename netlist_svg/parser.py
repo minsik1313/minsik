@@ -56,6 +56,7 @@ class Netlist:
     devices: list = field(default_factory=list)
     models: dict = field(default_factory=dict)
     globals: set = field(default_factory=set)
+    source: str = ""                # original netlist text
 
     @property
     def nets(self) -> set:
@@ -76,6 +77,7 @@ def _parse_params(tokens: list) -> dict:
 
 def parse(text: str) -> Netlist:
     nl = Netlist()
+    nl.source = text
     raw_lines = []
 
     for line in text.splitlines():
